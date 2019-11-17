@@ -5,7 +5,6 @@ import "reflect-metadata";
 import express, { Application } from 'express';
 import { createConnection, Connection, ConnectionOptions } from "typeorm";
 import { User } from './models/user';
-export { User } from './models/user';
 
 const esstrade: Application = express();
 
