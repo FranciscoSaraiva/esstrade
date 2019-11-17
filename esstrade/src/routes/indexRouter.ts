@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Connection } from 'typeorm';
-import { User } from '../models/user';
+import { User } from '../models/User';
 const router = express.Router();
 
 router.get('/', (_, res: Response) => {
@@ -13,7 +13,7 @@ router.get('/register', (_, res: Response) => {
 
 router.post('/user', (req: Request, res: Response) => {
     let body = req.body;
-    const user = new User(body.username, body.password, body.email);
+    const user = new User("Francisco", "123456789", "chico@email.com");
     console.log(user);
     user.save().then(() => {
         res.redirect('/');

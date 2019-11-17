@@ -1,9 +1,14 @@
+import { PrimaryGeneratedColumn, Column } from "typeorm";
+
 export class AssetType {
 
     /**
      * Attributes
      */
+    @PrimaryGeneratedColumn()
     private Id: number;
+
+    @Column({ name: "Name", type: "varchar" })
     private Name: string;
 
     /**

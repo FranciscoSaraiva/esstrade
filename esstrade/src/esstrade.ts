@@ -4,7 +4,6 @@
 import "reflect-metadata";
 import express, { Application } from 'express';
 import { createConnection, Connection, ConnectionOptions } from "typeorm";
-import { User } from './models/user';
 
 const esstrade: Application = express();
 
@@ -13,13 +12,21 @@ const esstrade: Application = express();
  ****************/
 
 const db_options: ConnectionOptions = {
-    type: "sqlite",
-    database: './database/esstrade.db',
-    entities: [User],
-    logging: true
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "password",
+    "database": "esstrade",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+        "src/models/*.ts"
+    ]
 }
+
 createConnection(db_options)
-    .then(connection => { 
+    .then(connection => {
         //console.log(connection); 
         console.log('Database connected...!');
         console.log(connection.manager)

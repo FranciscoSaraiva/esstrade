@@ -1,17 +1,34 @@
 import { AssetType } from "./asset_type";
+import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 
 export class Asset {
 
     /**
      * Attributes
      */
+    @PrimaryGeneratedColumn()
     private Id: number;
+
+    @Column({ name: "Acronym", type: "varchar" })
     private Acronym: string;
+
+    @Column({ name: "Name", type: "varchar" })
     private Name: string;
+
+    @OneToOne(type => AssetType)
+    @JoinColumn()
     private AssetType: AssetType;
+
+    @Column({ name: "Value", type: "double" })
     private Value: number;
+
+    @Column({ name: "BuyPrice", type: "double" })
     private BuyPrice: number;
+
+    @Column({ name: "SellPrice", type: "double" })
     private SellPrice: number;
+
+    @Column({ name: "Margin", type: "double" })
     private Margin: number;
 
     /**
@@ -39,14 +56,14 @@ export class Asset {
      */
 
     public UpdateValue(value: number): void {
-
+        console.log(value)
     }
 
     public UpdateBuyPrice(value: number): void {
-
+        console.log(value)
     }
 
     public UpdateSellPrice(value: number): void {
-
+        console.log(value)
     }
 }

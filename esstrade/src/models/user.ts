@@ -10,7 +10,7 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     private Id: number;
 
-    @Column({ name: "Username", type: "int" })
+    @Column({ name: "Username", type: "varchar" })
     private Username: string;
 
     @Column({ name: "Password", type: "varchar" })
@@ -22,10 +22,10 @@ export class User extends BaseEntity {
     @Column({ name: "Name", type: "varchar" })
     private Name: string;
 
-    @Column({ name: "Gender", type: "varchar" })
+    @Column({ name: "Gender", type: "bool" })
     private Gender: string;
 
-    @Column({ name: "Birthdate", type: "datetime" })
+    @Column({ name: "Birthdate", type: "date" })
     private Birthdate: Date;
 
     @Column({ name: "Balance", type: "double" })
