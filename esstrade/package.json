@@ -16,7 +16,6 @@
     "nodemon": "^1.19.4",
     "pug": "^2.0.4",
     "reflect-metadata": "^0.1.13",
-    "sqlite3": "^4.1.0",
     "ts-node": "^8.4.1",
     "typeorm": "^0.2.20",
     "typescript": "^3.6.4"
