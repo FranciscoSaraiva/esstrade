@@ -11,3 +11,4 @@ Implementações necessárias à 1º fase:
 
 Implementações necessárias à 2º fase:
 - Refactoring
+
