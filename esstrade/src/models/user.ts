@@ -10,34 +10,34 @@ export class User {
     @PrimaryGeneratedColumn()
     private Id: number;
 
-    @Column({ name: "Username", type: "varchar" })
+    @Column({ name: "username", type: "varchar" })
     private Username: string;
 
-    @Column({ name: "Password", type: "varchar" })
+    @Column({ name: "password", type: "varchar" })
     private Password: string;
 
-    @Column({ name: "Email", type: "varchar" })
+    @Column({ name: "email", type: "varchar" })
     private Email: string;
 
-    @Column({ name: "Name", type: "varchar" })
+    @Column({ name: "name", type: "varchar" })
     private Name: string;
 
-    @Column({ name: "Gender", type: "bool" })
+    @Column({ name: "gender", type: "bool" })
     private Gender: string;
 
-    @Column({ name: "Birthdate", type: "date" })
+    @Column({ name: "birthdate", type: "date" })
     private Birthdate: Date;
 
-    @Column({ name: "Balance", type: "double" })
+    @Column({ name: "balance", type: "double" })
     private Balance: number;
 
-    @Column({ name: "TotalAllocated", type: "double" })
+    @Column({ name: "total_allocated", type: "double" })
     private TotalAllocated: number;
 
-    @Column({ name: "Profit", type: "double" })
+    @Column({ name: "profit", type: "double" })
     private Profit: number;
 
-    @Column({ name: "Capital", type: "double" })
+    @Column({ name: "capital", type: "double" })
     private Capital: number;
 
     @OneToMany(() => CFD, cfd => cfd.User)

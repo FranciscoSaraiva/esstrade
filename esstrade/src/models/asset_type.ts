@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn, Column, Entity } from "typeorm"
 
-@Entity("AssetType")
+@Entity("Asset_Type")
 export class AssetType {
 
     /**
@@ -9,7 +9,7 @@ export class AssetType {
     @PrimaryGeneratedColumn()
     private Id: number;
 
-    @Column({ name: "Name", type: "varchar" })
+    @Column({ name: "name", type: "varchar" })
     private Name: string;
 
     /**

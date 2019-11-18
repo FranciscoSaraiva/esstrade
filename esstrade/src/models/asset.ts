@@ -10,25 +10,25 @@ export class Asset {
     @PrimaryGeneratedColumn()
     private Id: number;
 
-    @Column({ name: "Acronym", type: "varchar" })
+    @Column({ name: "acronym", type: "varchar" })
     private Acronym: string;
 
-    @Column({ name: "Name", type: "varchar" })
+    @Column({ name: "name", type: "varchar" })
     private Name: string;
 
     @OneToOne(() => AssetType)
     private AssetType: AssetType;
 
-    @Column({ name: "Value", type: "double" })
+    @Column({ name: "value", type: "double" })
     private Value: number;
 
-    @Column({ name: "BuyPrice", type: "double" })
+    @Column({ name: "buy_price", type: "double" })
     private BuyPrice: number;
 
-    @Column({ name: "SellPrice", type: "double" })
+    @Column({ name: "sell_price", type: "double" })
     private SellPrice: number;
 
-    @Column({ name: "Margin", type: "double" })
+    @Column({ name: "margin", type: "double" })
     private Margin: number;
 
     /**

@@ -6,7 +6,7 @@ import { ChildEntity, Column } from "typeorm";
 @ChildEntity()
 export class LongCFD extends CFD {
 
-    @Column({ name: "BuyPrice", type: "double" })
+    @Column({ name: "buy_price", type: "double" })
     private BuyPrice: number;
 
     /**

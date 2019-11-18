@@ -6,7 +6,7 @@ import { ChildEntity, Column } from "typeorm";
 @ChildEntity()
 export class ShortCFD extends CFD {
 
-    @Column({ name: "SellPrice", type: "double" })
+    @Column({ name: "sell_price", type: "double" })
     private SellPrice: number;
 
     /**

@@ -3,7 +3,7 @@ import { Asset } from "./asset";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance } from "typeorm";
 
 @Entity("CFD")
-@TableInheritance({ column: { name: "type", type: "varchar" } })
+@TableInheritance({ column: { name: "cfd_type", type: "varchar" } })
 export class CFD {
 
     /**
@@ -12,28 +12,28 @@ export class CFD {
     @PrimaryGeneratedColumn()
     private Id: number;
 
-    @Column({ name: "Name", type: "varchar" })
+    @Column({ name: "name", type: "varchar" })
     private Asset: Asset;
 
     @ManyToOne(() => User, user => user.GetCFDs)
     User: User;
 
-    @Column({ name: "Amount", type: "double" })
+    @Column({ name: "amount", type: "double" })
     private Amount: number;
 
-    @Column({ name: "TakeProfit", type: "double" })
+    @Column({ name: "take_profit", type: "double" })
     private TakeProfit: number;
 
-    @Column({ name: "StopLoss", type: "double" })
+    @Column({ name: "stop_loss", type: "double" })
     private StopLoss: number;
 
-    @Column({ name: "StartDate", type: "datetime" })
+    @Column({ name: "start_date", type: "datetime" })
     private StartDate: Date;
 
-    @Column({ name: "EndDate", type: "datetime" })
+    @Column({ name: "end_date", type: "datetime" })
     private EndDate: Date;
 
-    @Column({ name: "Closed", type: "bool" })
+    @Column({ name: "closed", type: "bool" })
     private Closed: boolean;
 
     /**
