@@ -16,7 +16,7 @@ export class CFD {
     private Asset: Asset;
 
     @ManyToOne(() => User, user => user.GetCFDs)
-    User: User;
+    private User: User;
 
     @Column({ name: "amount", type: "double" })
     private Amount: number;

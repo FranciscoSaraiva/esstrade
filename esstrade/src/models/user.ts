@@ -40,7 +40,7 @@ export class User {
     @Column({ name: "capital", type: "double" })
     private Capital: number;
 
-    @OneToMany(() => CFD, cfd => cfd.User)
+    @OneToMany(() => CFD, cfd => cfd.GetUser)
     private CFDs: CFD[];
 
     /**
