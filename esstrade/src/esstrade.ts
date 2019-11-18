@@ -3,7 +3,7 @@
  ****************/
 import "reflect-metadata";
 import express, { Application } from 'express';
-import { createConnection, Connection, ConnectionOptions } from "typeorm";
+import { createConnection, ConnectionOptions } from "typeorm";
 
 const esstrade: Application = express();
 
@@ -18,6 +18,7 @@ const db_options: ConnectionOptions = {
     "username": "root",
     "password": "password",
     "database": "esstrade",
+    "dropSchema": true,
     "synchronize": true,
     "logging": false,
     "entities": [
@@ -27,9 +28,10 @@ const db_options: ConnectionOptions = {
 
 createConnection(db_options)
     .then(connection => {
-        //console.log(connection); 
-        console.log('Database connected...!');
-        console.log(connection.manager)
+        //console.log(connection);
+        if (connection.isConnected) {
+            console.log("Database created...");
+        }
     })
     .catch(error => { console.log(error) });
 

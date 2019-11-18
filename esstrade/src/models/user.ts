@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, JoinTable, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { CFD } from "./cfd";
 
 @Entity("User")
-export class User extends BaseEntity {
+export class User {
 
     /**
      * Attributes
@@ -40,8 +40,7 @@ export class User extends BaseEntity {
     @Column({ name: "Capital", type: "double" })
     private Capital: number;
 
-    //@OneToMany(() => CFD, cfd => cfd.GetUser())
-    //@JoinTable()
+    @OneToMany(() => CFD, cfd => cfd.User)
     private CFDs: CFD[];
 
     /**
@@ -59,7 +58,6 @@ export class User extends BaseEntity {
      * @param Capital Capital value of the user in the platform
      */
     constructor(Username: string, Password: string, Email: string) {
-        super();
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;
@@ -70,7 +68,6 @@ export class User extends BaseEntity {
         this.TotalAllocated = 0.0;
         this.Profit = 0.0;
         this.Capital = 0.0;
-        this.CFDs = [];
     }
 
     /**

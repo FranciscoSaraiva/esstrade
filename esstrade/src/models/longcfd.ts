@@ -1,9 +1,12 @@
 import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
+import { ChildEntity, Column } from "typeorm";
 
+@ChildEntity()
 export class LongCFD extends CFD {
 
+    @Column({ name: "BuyPrice", type: "double" })
     private BuyPrice: number;
 
     /**

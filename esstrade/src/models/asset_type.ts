@@ -1,5 +1,6 @@
-import { PrimaryGeneratedColumn, Column } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity } from "typeorm"
 
+@Entity("AssetType")
 export class AssetType {
 
     /**

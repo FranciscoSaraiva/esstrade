@@ -1,6 +1,7 @@
 import { AssetType } from "./asset_type";
-import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToOne, Entity } from "typeorm";
 
+@Entity("Asset")
 export class Asset {
 
     /**
@@ -15,8 +16,7 @@ export class Asset {
     @Column({ name: "Name", type: "varchar" })
     private Name: string;
 
-    @OneToOne(type => AssetType)
-    @JoinColumn()
+    @OneToOne(() => AssetType)
     private AssetType: AssetType;
 
     @Column({ name: "Value", type: "double" })

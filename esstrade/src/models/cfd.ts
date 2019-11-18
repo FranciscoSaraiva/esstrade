@@ -1,19 +1,39 @@
-import { User } from "./User";
+import { User } from "./user";
 import { Asset } from "./asset";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance } from "typeorm";
 
+@Entity("CFD")
+@TableInheritance({ column: { name: "type", type: "varchar" } })
 export class CFD {
 
     /**
     * Attributes
     */
+    @PrimaryGeneratedColumn()
     private Id: number;
+
+    @Column({ name: "Name", type: "varchar" })
     private Asset: Asset;
-    private User: User;
+
+    @ManyToOne(() => User, user => user.GetCFDs)
+    User: User;
+
+    @Column({ name: "Amount", type: "double" })
     private Amount: number;
+
+    @Column({ name: "TakeProfit", type: "double" })
     private TakeProfit: number;
+
+    @Column({ name: "StopLoss", type: "double" })
     private StopLoss: number;
+
+    @Column({ name: "StartDate", type: "datetime" })
     private StartDate: Date;
+
+    @Column({ name: "EndDate", type: "datetime" })
     private EndDate: Date;
+
+    @Column({ name: "Closed", type: "bool" })
     private Closed: boolean;
 
     /**

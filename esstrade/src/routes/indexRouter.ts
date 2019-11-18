@@ -15,9 +15,9 @@ router.post('/user', (req: Request, res: Response) => {
     let body = req.body;
     const user = new User("Francisco", "123456789", "chico@email.com");
     console.log(user);
-    user.save().then(() => {
+    /*user.save().then(() => {
         res.redirect('/');
-    });
+    });*/
     res.write('<h1>Creating user...</h1>');
 });
 
