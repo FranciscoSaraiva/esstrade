@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
-import { Connection } from 'typeorm';
-import { User } from '../models/User';
+import { UserController } from '../controllers/userController'
+
 const router = express.Router();
+const userController = new UserController();
+
 
 router.get('/', (_, res: Response) => {
     res.render('index')
@@ -12,13 +14,7 @@ router.get('/register', (_, res: Response) => {
 });
 
 router.post('/user', (req: Request, res: Response) => {
-    let body = req.body;
-    const user = new User("Francisco", "123456789", "chico@email.com");
-    console.log(user);
-    /*user.save().then(() => {
-        res.redirect('/');
-    });*/
-    res.write('<h1>Creating user...</h1>');
+    userController.CreateUser(req, res);
 });
 
 module.exports = router;

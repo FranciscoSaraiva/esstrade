@@ -52,7 +52,8 @@ esstrade.set('view engine', 'pug');
 //static public folder
 esstrade.use(express.static('./src/public'));
 //express json
-esstrade.use(express.json())
+esstrade.use(express.json());
+esstrade.use(express.urlencoded({ extended: false }));
 
 /****************
 * SERVER

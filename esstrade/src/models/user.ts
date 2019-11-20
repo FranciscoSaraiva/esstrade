@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
 import { CFD } from "./cfd";
 
 @Entity("User")
-export class User {
+export class User extends BaseEntity{
 
     /**
      * Attributes
@@ -19,11 +19,11 @@ export class User {
     @Column({ name: "email", type: "varchar" })
     private Email: string;
 
-    @Column({ name: "name", type: "varchar" })
-    private Name: string;
+    @Column({ name: "first_name", type: "varchar" })
+    private FirstName: string;
 
-    @Column({ name: "gender", type: "bool" })
-    private Gender: string;
+    @Column({ name: "last_name", type: "varchar" })
+    private LastName: string;
 
     @Column({ name: "birthdate", type: "date" })
     private Birthdate: Date;
@@ -49,8 +49,8 @@ export class User {
      * @param Username Username of the user in the platform
      * @param Password password of the user (this is probably not advised)
      * @param Email Email of the user in the platform
-     * @param Name Real name of the user 
-     * @param Gender Gender of the user
+     * @param FirstName First name of the user
+     * @param LastName Last name of the user
      * @param Birthdate Birth date of the user
      * @param Balance Money currently in the account
      * @param TotalAllocated Total money allocated in all CFDs
@@ -58,11 +58,12 @@ export class User {
      * @param Capital Capital value of the user in the platform
      */
     constructor(Username: string, Password: string, Email: string) {
+        super();
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;
-        this.Name = "";
-        this.Gender = "";
+        this.FirstName = "";
+        this.LastName = "";
         this.Birthdate = new Date;
         this.Balance = 0.0;
         this.TotalAllocated = 0.0;
@@ -78,7 +79,8 @@ export class User {
         return {
             Username: this.Username,
             Email: this.Email,
-            Name: this.Name,
+            FirstName: this.FirstName,
+            LastName: this.LastName,
             Balance: this.Balance,
             TotalAllocated: this.TotalAllocated,
             Profit: this.Profit,
