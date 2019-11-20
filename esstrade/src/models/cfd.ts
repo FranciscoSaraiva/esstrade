@@ -9,7 +9,7 @@ export class CFD {
     /**
     * Attributes
     */
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name:"id"})
     private Id: number;
 
     @Column({ name: "name", type: "varchar" })

@@ -7,7 +7,7 @@ export class User extends BaseEntity{
     /**
      * Attributes
      */
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn({name:"id"})
     private Id: number;
 
     @Column({ name: "username", type: "varchar" })

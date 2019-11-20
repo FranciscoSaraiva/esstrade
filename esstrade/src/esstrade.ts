@@ -1,15 +1,20 @@
 /****************
  * REQUIRES
  ****************/
+//packages
 import "reflect-metadata";
-import express, { Application } from 'express';
 import { createConnection, ConnectionOptions } from "typeorm";
+import chalk from "chalk";
+import clear from "clear";
+import figlet from "figlet";
 
-const esstrade: Application = express();
+//locals
+import { MainMenu } from "./menus/main_menu";
 
-/****************
- * SQLITE
- ****************/
+
+/***************************
+ * Database Initialization
+ ***************************/
 
 const db_options: ConnectionOptions = {
     "type": "mysql",
@@ -30,37 +35,19 @@ createConnection(db_options)
     .then(connection => {
         //console.log(connection);
         if (connection.isConnected) {
+            clear();
+            console.log(
+                chalk.yellow(
+                    figlet.textSync('ESSTrade', { horizontalLayout: 'full' })
+                )
+            )
             console.log("Database created...");
+            MainMenu();
         }
     })
     .catch(error => { console.log(error) });
 
 
-/****************
- * ROUTERS
- ****************/
-const indexRouter = require('./routes/indexRouter');
 
-/****************
-* MIDDLEWARES
-****************/
 
-//views
-esstrade.set('views', ['./src/views', './src/views/auth']);
-esstrade.set('view engine', 'pug');
 
-//static public folder
-esstrade.use(express.static('./src/public'));
-//express json
-esstrade.use(express.json());
-esstrade.use(express.urlencoded({ extended: false }));
-
-/****************
-* SERVER
-****************/
-
-esstrade.use('/', indexRouter);
-
-esstrade.listen(7777, () => {
-    console.log('Server running at port: ' + 7777)
-});
