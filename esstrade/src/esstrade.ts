@@ -7,6 +7,7 @@ import { createConnection, ConnectionOptions } from "typeorm";
 import chalk from "chalk";
 import clear from "clear";
 import figlet from "figlet";
+import inquirer from "inquirer";
 
 //locals
 import { MainMenu } from "./menus/main_menu";
@@ -42,7 +43,10 @@ createConnection(db_options)
                 )
             )
             console.log("Database created...");
-            MainMenu();
+            let res = inquirer.prompt([
+                {name: 'test', type: 'list', message: 'question1?', choices: [{name: 'a', value: 1}, {name: 'b', value: 2}, {name: 'c', value: 3}], default: 1}
+              ])
+            //MainMenu();
         }
     })
     .catch(error => { console.log(error) });
