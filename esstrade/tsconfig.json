@@ -2,21 +2,18 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
-        "outDir": "./dist",
-        "strict": false,
-        "noUnusedLocals": false,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
+        "lib": ["es6", "es2015", "dom"],
+        "outDir": "build",
+        "rootDir": "src",
+        "types": ["node", "inquirer", "figlet", "clear"],
+        "experimentalDecorators": true,
+        "strict": true,
         "esModuleInterop": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
+        "resolveJsonModule": true,
+        "importHelpers": true,
     },
-    "include": [
-        "src/**/*"
-    ],
     "exclude": [
         "node_modules",
-        "**/*.test.ts"
+        "**/*.test.ts",
     ]
 }

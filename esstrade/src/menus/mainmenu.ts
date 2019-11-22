@@ -1,10 +1,18 @@
-import chalk from "chalk";
-import boxen, { BorderStyle } from "boxen";
-import clear from "clear";
-import figlet from "figlet";
+import chalk from 'chalk';
+import boxen, { BorderStyle } from 'boxen';
+import clear from 'clear'
+import figlet from 'figlet';
 import inquirer from "inquirer";
 
 export function MainMenu(): void {
+
+    clear();
+
+    console.log(
+        chalk.yellow(
+            figlet.textSync('ESSTrade', { horizontalLayout: 'full' })
+        )
+    );
 
     let register = chalk.yellow("Register");
     let login = chalk.yellowBright("Login");
@@ -37,27 +45,12 @@ export function MainMenu(): void {
                 case exit:
                     ExitApp();
                     break;
-                default:
-                    MainMenu();
             }
         })
-}
-
-function RegisterUser(): void {
-
-}
-
-function LoginUser(): void {
-
-}
-
-function CheckAssets(): void {
-    
 }
 
 function ExitApp(): void {
     clear();
     console.log("Shutting down...")
-    console.log('You may close the terminal...')
     return process.exit(0);
 }
