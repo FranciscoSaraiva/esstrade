@@ -3,6 +3,8 @@ import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear'
 import figlet from 'figlet';
 import inquirer from "inquirer";
+//local
+
 
 export function MainMenu(): void {
 
@@ -18,15 +20,6 @@ export function MainMenu(): void {
     let login = chalk.yellowBright("Login");
     let assets = chalk.greenBright("Check Assets");
     let exit = chalk.red("Exit");
-
-    var boxenOptions = {
-        padding: 1,
-        margin: 1,
-        borderStyle: BorderStyle.DoubleSingle,
-        borderColor: "red",
-    };
-
-    console.log(boxen("Main Menu", boxenOptions));
 
     inquirer.prompt({
         type: "list",
@@ -45,6 +38,8 @@ export function MainMenu(): void {
                 case exit:
                     ExitApp();
                     break;
+                default:
+                    MainMenu();
             }
         })
 }
