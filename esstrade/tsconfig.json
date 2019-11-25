@@ -11,6 +11,9 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "importHelpers": true,
+        "emitDecoratorMetadata": true,
+        "strictPropertyInitialization": false, //remove property initialization
+        "moduleResolution": "node" //to import tslib correctly for async/await
     },
     "exclude": [
         "node_modules",

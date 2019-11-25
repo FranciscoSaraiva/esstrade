@@ -1,0 +1,17 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "root",
+   "password": "password",
+   "database": "esstrade",
+   "synchronize": false, 
+   "dropSchema": false,
+   "logging": false,
+   "entities": [
+      "build/models/*.js"
+   ],
+   "cli": {
+      "entitiesDir": "src/models"
+   }
+}

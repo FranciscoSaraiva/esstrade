@@ -4,11 +4,12 @@ import clear from 'clear'
 import figlet from 'figlet';
 import inquirer from "inquirer";
 //local
+import { User } from '../models/user';
 
 
 export function MainMenu(): void {
 
-    clear();
+    //clear();
 
     console.log(
         chalk.yellow(
@@ -30,6 +31,7 @@ export function MainMenu(): void {
             console.log(answers.option)
             switch (answers.option) {
                 case register:
+                    Register();
                     break;
                 case login:
                     break;
@@ -42,6 +44,25 @@ export function MainMenu(): void {
                     MainMenu();
             }
         })
+}
+
+function Register(): void {
+    inquirer.prompt([{ type: "input", name: "email" }, { type: "password", name: "password", mask: "*" }, { type: "input", name: "name" }])
+        .then((answers) => {
+            let username = answers.name;
+            let email = answers.email;
+            let password = answers.password;
+
+            var user = new User(username, password, email);
+            user.save()
+                .then(data => {
+                    let user = data.GetUserDetails();
+                    console.log(chalk.red("User created!"));
+                    setTimeout(() => {
+                        MainMenu();
+                    }, 2000);
+                })
+        });
 }
 
 function ExitApp(): void {
