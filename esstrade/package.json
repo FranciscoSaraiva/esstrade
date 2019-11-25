@@ -1,0 +1,24 @@
+{
+  "name": "esstrade",
+  "version": "1.0.0",
+  "description": "Projeto Arquitetura Software",
+  "main": "esstrade.js",
+  "scripts": {
+    "dev": "tsc && node dist/esstrade.js",
+    "start": "npm run build && node ./build/esstrade.js",
+    "build": "tsc"
+  },
+  "author": "francisco saraiva",
+  "license": "ISC",
+  "dependencies": {
+    "@types/clear": "^0.1.0",
+    "@types/figlet": "^1.2.0",
+    "@types/inquirer": "^6.5.0",
+    "@types/node": "^12.12.11",
+    "boxen": "^4.1.0",
+    "chalk": "^3.0.0",
+    "clear": "^0.1.0",
+    "figlet": "^1.2.4",
+    "inquirer": "^7.0.0"
+  }
+}
