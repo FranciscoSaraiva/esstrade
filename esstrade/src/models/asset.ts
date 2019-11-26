@@ -59,6 +59,34 @@ export class Asset extends BaseEntity {
      * Methods
      */
 
+    public GetAcronym(): string {
+        return this.Acronym;
+    }
+
+    public GetName(): string {
+        return this.Name;
+    }
+
+    public GetAssetType(): AssetType {
+        return this.AssetType;
+    }
+
+    public GetValue(): number {
+        return this.Value;
+    }
+
+    public GetBuyPrice(): number {
+        return this.BuyPrice;
+    }
+
+    public GetSellPrice(): number {
+        return this.SellPrice;
+    }
+
+    public GetMargin(): number {
+        return this.Margin;
+    }
+
     public UpdateValue(value: number): void {
         console.log(value)
     }

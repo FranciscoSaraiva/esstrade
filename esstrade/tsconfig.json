@@ -5,7 +5,7 @@
         "lib": ["es6", "es2015", "dom"],
         "outDir": "build",
         "rootDir": "src",
-        "types": ["node", "inquirer", "figlet", "clear"],
+        "types": ["node", "inquirer", "figlet", "clear", "cli-table"],
         "experimentalDecorators": true,
         "strict": true,
         "esModuleInterop": true,

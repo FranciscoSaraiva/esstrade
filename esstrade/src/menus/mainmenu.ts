@@ -3,6 +3,7 @@ import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear'
 import figlet from 'figlet';
 import inquirer from "inquirer";
+import Table from "cli-table";
 import { getRepository } from 'typeorm';
 //local
 import { User } from '../models/user';
@@ -88,11 +89,30 @@ async function CheckAssets() {
         choices: types
     }).then(async answers => {
 
-        let asset_type = await getRepository(AssetType).find({ where: { Name: answers.type } });
-        let assets = await getRepository(Asset).find({ where: { AssetType: { Id: asset_type[0].GetId() } } })
+        let asset_type: AssetType[];
+        asset_type = [];
+        let assets: Asset[];
+        assets = [];
 
-        console.log(assets);
+        if (answers.type != "All") {
+            asset_type = await getRepository(AssetType).find({ where: { Name: answers.type } });
+            assets = await getRepository(Asset).find({ where: { AssetType: { Id: asset_type[0].GetId() } } });
+        } else {
+            assets = await getRepository(Asset).find();
+        }
 
+        let assetRows: any[];
+        assetRows = [];
+        assets.forEach(asset => {
+            assetRows.push([asset.GetAcronym(), asset.GetName(), asset.GetAssetType().GetName(), asset.GetValue(), asset.GetBuyPrice(), asset.GetSellPrice(), asset.GetMargin()]);
+        });
+
+        let table = CreateTable(
+            ["Acronym", "Name", "Type", "Value", "Buy Price", "Sell Price", "Margin"],
+            assetRows
+        );
+
+        console.log(table.toString())
         MainMenu(false);
     })
 }
@@ -101,4 +121,16 @@ function ExitApp(): void {
     clear();
     console.log("Shutting down...")
     return process.exit(0);
+}
+
+function CreateTable(head: string[], rows: any[]): Table {
+    var table = new Table({
+        head: head,
+
+    });
+    rows.forEach(row => {
+        table.push(row);
+    });
+
+    return table;
 }
