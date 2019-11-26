@@ -12,6 +12,14 @@ Implementações necessárias à 1º fase:
 Implementações necessárias à 2º fase:
 - Refactoring
 
-## Implementação Arquitetural
+## Instalação
+- Criar schema com nome da base de dados 
+```
+CREATE SCHEMA `esstrade` ;
+```
+- Configurar o ficheiro ormconfig.json para as informações da conexão MySQL
 
-Router --*(goes to)*--> Controller --*calls*--> Service --*acts on*--> Model   
+- Correr ``npm install`` na base do projeto **esstrade**
+
+- Correr a aplicação com ``npm start``  
+ 

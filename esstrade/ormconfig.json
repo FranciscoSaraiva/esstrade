@@ -5,8 +5,8 @@
    "username": "root",
    "password": "password",
    "database": "esstrade",
-   "synchronize": false, 
-   "dropSchema": false,
+   "synchronize": true, 
+   "dropSchema": true,
    "logging": false,
    "entities": [
       "build/models/*.js"

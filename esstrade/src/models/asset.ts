@@ -1,13 +1,13 @@
 import { AssetType } from "./asset_type";
-import { PrimaryGeneratedColumn, Column, OneToOne, Entity, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, ManyToOne, JoinColumn, RelationId } from "typeorm";
 
 @Entity("Asset")
-export class Asset {
+export class Asset extends BaseEntity {
 
     /**
      * Attributes
      */
-    @PrimaryGeneratedColumn({name:"id"})
+    @PrimaryGeneratedColumn({ name: "id" })
     private Id: number;
 
     @Column({ name: "acronym", type: "varchar" })
@@ -16,9 +16,12 @@ export class Asset {
     @Column({ name: "name", type: "varchar" })
     private Name: string;
 
-    @OneToOne(() => AssetType)
+    @ManyToOne(type => AssetType, { eager: true })
     @JoinColumn()
     private AssetType: AssetType;
+
+    @RelationId((asset: Asset) => asset.AssetType)
+    private AssetTypeId: number;
 
     @Column({ name: "value", type: "double" })
     private Value: number;
@@ -41,8 +44,8 @@ export class Asset {
      * @param BuyPrice Buy price of the asset
      * @param SellPrice Sell price of the asset
      */
-    constructor(Id: number, Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Margin: number) {
-        this.Id = Id;
+    constructor(Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Margin: number) {
+        super();
         this.Acronym = Acronym;
         this.Name = Name;
         this.AssetType = AssetType;

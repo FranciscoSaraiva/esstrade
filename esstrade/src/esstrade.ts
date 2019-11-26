@@ -4,20 +4,20 @@ import { createConnection } from 'typeorm';
 import clear from 'clear';
 //local
 import { MainMenu } from './menus/mainmenu';
+import { SeedDatabase } from './database/seed';
 
 console.log('');
 clear();
 
-createConnection()
-    .then(async connection => {
-        console.log(connection);
-
-        let queryR = connection.createQueryRunner();
-        let hasDB = await queryR.hasDatabase("esstrade");
-        console.log(hasDB);
-        MainMenu();
-    })
-    .catch(error => {
-        console.log("An error connecting to the database occured...");
-        console.log(error)
-    })
+createConnection().then(connection => {
+    //console.log(connection)
+    console.log('Connected...')
+    SeedDatabase()
+        .then(() => {
+            MainMenu(false);
+        })
+        .catch(error => {
+            console.log(error);
+            console.log('Error connecting to the database...');
+        })
+})

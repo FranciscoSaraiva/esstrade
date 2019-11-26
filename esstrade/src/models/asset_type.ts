@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, BaseEntity } from "typeorm"
+import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, Unique } from "typeorm"
 
 @Entity("Asset_Type")
 export class AssetType extends BaseEntity {
@@ -17,13 +17,16 @@ export class AssetType extends BaseEntity {
      * @param Id Id of the AssetType
      * @param Name Name of the type 
      */
-    constructor(Id: number, Name: string) {
+    constructor(Name: string) {
         super();
-        this.Id = Id;
         this.Name = Name;
     }
 
-    public GetName(): String {
+    public GetId(): number {
+        return this.Id;
+    }
+
+    public GetName(): string {
         return this.Name;
     }
 
