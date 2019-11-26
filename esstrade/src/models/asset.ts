@@ -1,5 +1,8 @@
-import { AssetType } from "./asset_type";
 import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, ManyToOne, JoinColumn, RelationId } from "typeorm";
+var si = require('stock-info');
+//local
+import { AssetType } from "./asset_type";
+import { ApiResponse } from "../api/api_response";
 
 @Entity("Asset")
 export class Asset extends BaseEntity {
@@ -32,8 +35,8 @@ export class Asset extends BaseEntity {
     @Column({ name: "sell_price", type: "double" })
     private SellPrice: number;
 
-    @Column({ name: "margin", type: "double" })
-    private Margin: number;
+    @Column({ name: "change", type: "double" })
+    private Change: number;
 
     /**
      * 
@@ -44,7 +47,7 @@ export class Asset extends BaseEntity {
      * @param BuyPrice Buy price of the asset
      * @param SellPrice Sell price of the asset
      */
-    constructor(Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Margin: number) {
+    constructor(Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Change: number) {
         super();
         this.Acronym = Acronym;
         this.Name = Name;
@@ -52,7 +55,7 @@ export class Asset extends BaseEntity {
         this.Value = Value;
         this.BuyPrice = BuyPrice;
         this.SellPrice = SellPrice;
-        this.Margin = Margin;
+        this.Change = Change;
     }
 
     /**
@@ -83,19 +86,17 @@ export class Asset extends BaseEntity {
         return this.SellPrice;
     }
 
-    public GetMargin(): number {
-        return this.Margin;
+    public GetChange(): number {
+        return this.Change;
     }
 
-    public UpdateValue(value: number): void {
-        console.log(value)
-    }
+    public async UpdateAsset() {
+        var response = await si.getSingleStockInfo(this.GetAcronym());
+        var apiResponse = new ApiResponse(response);
 
-    public UpdateBuyPrice(value: number): void {
-        console.log(value)
-    }
-
-    public UpdateSellPrice(value: number): void {
-        console.log(value)
+        this.Value = apiResponse.Price;
+        this.BuyPrice = apiResponse.Buy;
+        this.SellPrice = apiResponse.Sell;
+        this.Change = apiResponse.Change;
     }
 }

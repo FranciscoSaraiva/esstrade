@@ -12,6 +12,8 @@
         "resolveJsonModule": true,
         "importHelpers": true,
         "emitDecoratorMetadata": true,
+        "noImplicitAny": false, //to help with asyncs
+        "strictNullChecks": false, //can send nulls for values
         "strictPropertyInitialization": false, //remove property initialization
         "moduleResolution": "node" //to import tslib correctly for async/await
     },

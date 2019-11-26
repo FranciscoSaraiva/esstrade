@@ -3,14 +3,13 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import clear from 'clear';
 //local
-import { MainMenu } from './menus/mainmenu';
+import { MainMenu } from './menus/main_menu';
 import { SeedDatabase } from './database/seed';
-
-console.log('');
-clear();
 
 createConnection().then(connection => {
     //console.log(connection)
+    console.log(connection);
+    clear();
     console.log('Connected...')
     SeedDatabase()
         .then(() => {

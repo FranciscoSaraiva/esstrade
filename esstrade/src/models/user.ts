@@ -26,9 +26,6 @@ export class User extends BaseEntity {
     @Column({ name: "last_name", type: "varchar" })
     private LastName: string;
 
-    @Column({ name: "birthdate", type: "date" })
-    private Birthdate: Date;
-
     @Column({ name: "balance", type: "double" })
     private Balance: number;
 
@@ -65,7 +62,6 @@ export class User extends BaseEntity {
         this.Email = Email;
         this.FirstName = "";
         this.LastName = "";
-        this.Birthdate = new Date;
         this.Balance = 0.0;
         this.TotalAllocated = 0.0;
         this.Profit = 0.0;
@@ -76,12 +72,24 @@ export class User extends BaseEntity {
      * Methods
      */
 
+    public GetEmail(): string {
+        return this.Email;
+    }
+
     public GetUserDetails(): User {
         return this;
     }
 
     public GetCFDs(): CFD[] {
         return this.CFDs;
+    }
+
+    public CheckLoginCredentials(email: string, password: string): boolean {
+        return (this.Email == email && this.Password == password);
+    }
+
+    public CheckIfEmailIsTaken(email: string): boolean {
+        return (this.Email == email);
     }
 
 }
