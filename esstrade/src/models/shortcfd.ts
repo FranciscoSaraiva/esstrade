@@ -22,9 +22,9 @@ export class ShortCFD extends CFD {
      * @param Closed Flag that indicates the CFD is closed
      * @param SellPrice Price that was set per unit of the asset at the start of the CFD
      */
-    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, BuyPrice: number) {
+    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, SellPrice: number) {
         super(Asset, User, Amount, TakeProfit, StopLoss, StartDate, EndDate, Closed);
-        this.SellPrice = BuyPrice;
+        this.SellPrice = SellPrice;
     }
 
     /**

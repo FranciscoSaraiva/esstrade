@@ -10,18 +10,9 @@ import { Asset } from '../models/asset';
 
 export async function GetPortfolios(user: User) {
     var foundUser = await getRepository(User).findOne({ where: { Email: user.GetEmail() } })
-    var foundAsset = await getRepository(Asset).findOne({ where: { Acronym: "GOOG" } });
+    var cfds = await getRepository(CFD).find({ where: { User: foundUser } })
 
-    var newLongCFD = new LongCFD(foundAsset, foundUser, 500, 550, 450, new Date(), new Date(), false, 1000)
-    await newLongCFD.save();
-
-    var longcfds = await getRepository(LongCFD).find()
-    var shortcfds = await getRepository(ShortCFD).find()
-    var cfds = await getRepository(CFD).find()
-
-    console.log(longcfds);
-    console.log(shortcfds);
-    console.log(cfds);
+    //make table now with cfds...
 
     LoggedMenu(false, user);
 }
