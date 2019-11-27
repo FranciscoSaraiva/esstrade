@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, ManyToOne, JoinColumn, RelationId } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, ManyToOne, RelationId } from "typeorm";
 var si = require('stock-info');
 //local
 import { AssetType } from "./asset_type";
@@ -20,7 +20,6 @@ export class Asset extends BaseEntity {
     private Name: string;
 
     @ManyToOne(type => AssetType, { eager: true })
-    @JoinColumn()
     private AssetType: AssetType;
 
     @RelationId((asset: Asset) => asset.AssetType)

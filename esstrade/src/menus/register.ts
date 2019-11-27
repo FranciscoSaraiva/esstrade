@@ -21,7 +21,7 @@ export function Register(): void {
 
             console.log(boxen(
                 'Username: ' + chalk.blue(username) + '\n' +
-                'Email: ' + chalk.blue(email) + '\n' +
+                'Email: ' + chalk.blue(email) + '\n',
                 { padding: 1, borderStyle: BorderStyle.Double, borderColor: "green" }))
 
             inquirer.prompt({ type: "confirm", name: "confirm", message: "Are these correct?" })
@@ -37,8 +37,7 @@ export function Register(): void {
                         } else {
                             var newUser = new User(username, password, email);
                             newUser.save()
-                                .then(data => {
-                                    let user = data.GetUserDetails();
+                                .then(user => {
                                     console.log(chalk.red(`User with email ${user.GetEmail()} created!\n`));
                                     MainMenu(false);
                                 })

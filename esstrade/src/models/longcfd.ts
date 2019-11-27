@@ -1,7 +1,7 @@
 import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
-import { ChildEntity, Column } from "typeorm";
+import { ChildEntity, Column, BaseEntity } from "typeorm";
 
 @ChildEntity()
 export class LongCFD extends CFD {
@@ -22,8 +22,8 @@ export class LongCFD extends CFD {
      * @param Closed Flag that indicates the CFD is closed
      * @param BuyPrice Price that was set per unit of the asset at the start of the CFD
      */
-    constructor(Id: number, Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, BuyPrice: number) {
-        super(Id, Asset, User, Amount, TakeProfit, StopLoss, StartDate, EndDate, Closed);
+    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, BuyPrice: number) {
+        super(Asset, User, Amount, TakeProfit, StopLoss, StartDate, EndDate, Closed);
         this.BuyPrice = BuyPrice;
     }
 

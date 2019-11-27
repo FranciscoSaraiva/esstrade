@@ -10,7 +10,7 @@ createConnection().then(connection => {
     //console.log(connection)
     console.log(connection);
     clear();
-    console.log('Connected...')
+    console.log('Connecting...')
     SeedDatabase()
         .then(() => {
             MainMenu(false);

@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn } from "typeorm";
 //local
 import { CFD } from "./cfd";
 
 @Entity("User")
+
 export class User extends BaseEntity {
 
     /**
@@ -38,7 +39,8 @@ export class User extends BaseEntity {
     @Column({ name: "capital", type: "double" })
     private Capital: number;
 
-    @OneToMany(() => CFD, cfd => cfd.GetUser)
+    @OneToMany(type => CFD, cfd => cfd.GetUser)
+    @JoinColumn()
     private CFDs: CFD[];
 
     /**
@@ -72,12 +74,36 @@ export class User extends BaseEntity {
      * Methods
      */
 
+    public GetUsername(): string {
+        return this.Username;
+    }
+
     public GetEmail(): string {
         return this.Email;
     }
 
-    public GetUserDetails(): User {
-        return this;
+    public GetFirstName(): string {
+        return this.FirstName;
+    }
+
+    public GetLastName(): string {
+        return this.LastName;
+    }
+
+    public GetBalance(): number {
+        return this.Balance;
+    }
+
+    public GetTotalAllocated(): number {
+        return this.TotalAllocated;
+    }
+
+    public GetProfit(): number {
+        return this.Profit;
+    }
+
+    public GetCapital(): number {
+        return this.Capital;
     }
 
     public GetCFDs(): CFD[] {
@@ -90,6 +116,22 @@ export class User extends BaseEntity {
 
     public CheckIfEmailIsTaken(email: string): boolean {
         return (this.Email == email);
+    }
+
+    public SetFirstName(name: string): void {
+        this.FirstName = name;
+    }
+
+    public SetLastName(name: string): void {
+        this.LastName = name;
+    }
+
+    public SetPassword(password: string): void {
+        this.Password = password;
+    }
+
+    public AddBalance(amount: number): void {
+        this.Balance += amount;
     }
 
 }

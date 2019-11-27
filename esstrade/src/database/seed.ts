@@ -6,7 +6,10 @@ import { User } from '../models/user';
 export async function SeedDatabase() {
 
     //Dummy User
-    var user = new User("test", "123456789", "test@email.com");
+    var user = new User("test", "1", "test");
+    user.SetFirstName('Test');
+    user.SetLastName('Maximus');
+    user.AddBalance(100);
     await user.save();
 
     //AssetTypes

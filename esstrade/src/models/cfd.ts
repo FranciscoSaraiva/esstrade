@@ -1,22 +1,30 @@
 import { User } from "./user";
 import { Asset } from "./asset";
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance, RelationId, JoinColumn, BaseEntity } from "typeorm";
 
 @Entity("CFD")
 @TableInheritance({ column: { name: "cfd_type", type: "varchar" } })
-export class CFD {
+export abstract class CFD extends BaseEntity {
 
     /**
     * Attributes
     */
-    @PrimaryGeneratedColumn({name:"id"})
+    @PrimaryGeneratedColumn({ name: "id" })
     private Id: number;
 
-    @Column({ name: "name", type: "varchar" })
+    @ManyToOne(type => Asset, { eager: true })
+    @JoinColumn()
     private Asset: Asset;
 
-    @ManyToOne(() => User, user => user.GetCFDs)
+    @RelationId((cfd: CFD) => cfd.Asset)
+    private AssetId: number;
+
+    @ManyToOne(type => User, { eager: true })
+    @JoinColumn()
     private User: User;
+
+    @RelationId((cfd: CFD) => cfd.User)
+    private UserId: number;
 
     @Column({ name: "amount", type: "double" })
     private Amount: number;
@@ -36,6 +44,8 @@ export class CFD {
     @Column({ name: "closed", type: "bool" })
     private Closed: boolean;
 
+    private CFD_Type: string;
+
     /**
      * 
      * @param Id Id of the user 
@@ -48,8 +58,8 @@ export class CFD {
      * @param EndDate Date the CFD was ended
      * @param Closed Flag that indicates the CFD is closed
      */
-    constructor(Id: number, Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean) {
-        this.Id = Id;
+    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean) {
+        super();
         this.Asset = Asset;
         this.User = User;
         this.Amount = Amount;

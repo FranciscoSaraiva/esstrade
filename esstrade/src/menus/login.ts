@@ -5,6 +5,7 @@ import { getRepository } from 'typeorm';
 import { User } from '../models/user';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from './logged_menu';
+import clear from 'clear';
 
 export function Login(): void {
     inquirer.prompt([
@@ -16,10 +17,12 @@ export function Login(): void {
 
             var user: User;
             var user = await getRepository(User).findOne({ where: { Email: email } });
-            if (user.CheckLoginCredentials(email, password)) {
+            console.log('GOT THE USER')
+            if (user != undefined && user.CheckLoginCredentials(email, password)) {
                 console.log(chalk.green('User logged'))
                 LoggedMenu(true, user);
             } else {
+                clear();
                 console.log(chalk.red('Incorrect email/password, please try again'))
                 MainMenu(false);
             }

@@ -29,7 +29,7 @@ export function MainMenu(clear_screen: boolean): void {
         type: "list",
         name: "option",
         message: "Choose a menu option",
-        choices: [register, login, new inquirer.Separator(), assets, new inquirer.Separator(), exit, "test yahoo"]
+        choices: [register, login, new inquirer.Separator(), assets, new inquirer.Separator(), exit]
     })
         .then(answers => {
             console.log(answers.option)
@@ -46,9 +46,9 @@ export function MainMenu(clear_screen: boolean): void {
                 case exit:
                     ExitApp();
                     break;
-                case "test yahoo":
-                    testYahoo();
-                    break;
+                /*                 case "test yahoo":
+                                    testYahoo();
+                                    break; */
                 default:
                     MainMenu(true);
                     break;
@@ -62,7 +62,7 @@ function ExitApp(): void {
     return process.exit(0);
 }
 
-var si = require('stock-info');
+/* var si = require('stock-info');
 function testYahoo(): void {
     si.getSingleStockInfo('FB')
         .then(stock => {
@@ -76,4 +76,4 @@ function testYahoo(): void {
             })
             MainMenu(false);
         })
-}
+} */
