@@ -44,8 +44,6 @@ export abstract class CFD extends BaseEntity {
     @Column({ name: "closed", type: "bool" })
     private Closed: boolean;
 
-    private CFD_Type: string;
-
     /**
      * 
      * @param Id Id of the user 

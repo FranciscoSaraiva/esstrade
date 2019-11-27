@@ -1,10 +1,20 @@
 
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
+import { createConnection, getRepository } from 'typeorm';
 import clear from 'clear';
 //local
 import { MainMenu } from './menus/main_menu';
 import { SeedDatabase } from './database/seed';
+import { Asset } from './models/asset';
+
+//run constant updates to the assets...
+async function SynchAssets() {
+    var assets = await getRepository(Asset).find();
+    for (let index = 0; index < assets.length; index++) {
+        var asset = assets[index];
+        await asset.UpdateAsset();
+    }
+}
 
 createConnection().then(connection => {
     //console.log(connection)
@@ -14,6 +24,8 @@ createConnection().then(connection => {
     SeedDatabase()
         .then(() => {
             MainMenu(false);
+
+            setInterval(SynchAssets, 5000) //run assets on the side...
         })
         .catch(error => {
             console.log(error);
