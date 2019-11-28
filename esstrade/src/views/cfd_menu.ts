@@ -2,17 +2,14 @@
 import inquirer from 'inquirer';
 import clear from 'clear';
 import chalk from 'chalk';
-//local
-import { User } from '../classes/user';
-import { ShortCFD } from '../classes/shortcfd';
-import { LongCFD } from '../classes/longcfd';
 import { LoggedMenu } from './logged_menu';
 import { CloseCFD } from './close_cfd';
 import { OpenCFD } from './open_cfd';
+import { Trader } from '../classes/trader';
 
 
 
-export function CFDMenu(clean_screen: boolean, user: User) {
+export function CFDMenu(clean_screen: boolean, trader: Trader) {
 
     if (clean_screen)
         clear();
@@ -32,13 +29,13 @@ export function CFDMenu(clean_screen: boolean, user: User) {
         .then(answers => {
             switch (answers.option) {
                 case openCFD:
-                    OpenCFD(user);
+                    OpenCFD(trader);
                     break;
                 case closeCFD:
-                    CloseCFD(user);
+                    CloseCFD(trader);
                     break;
                 case exit:
-                    LoggedMenu(true, user);
+                    LoggedMenu(true, trader);
                     break;
             }
         })

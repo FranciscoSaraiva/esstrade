@@ -2,30 +2,31 @@ import chalk from 'chalk';
 import clear from 'clear';
 import Table from 'cli-table';
 import { getRepository } from 'typeorm';
-//local
 import { User } from '../classes/user';
 import { LongCFD } from '../classes/longcfd';
 import { ShortCFD } from '../classes/shortcfd';
 import { CFD } from '../classes/cfd';
 import { CFDMenu } from './cfd_menu';
 import { CreateTable } from '../utilities/table';
+import { Trader } from '../classes/trader';
 
 
-export async function GetPortfolios(clear_screen: boolean, user: User) {
+export async function GetPortfolios(clear_screen: boolean, trader: Trader) {
 
     if (clear_screen)
         clear();
 
-    var foundUser = await getRepository(User).findOne({ where: { Email: user.GetEmail() } })
-    var longCFDs = await getRepository(LongCFD).find({ where: { User: foundUser, Closed: false } })
-    var shortCFDs = await getRepository(ShortCFD).find({ where: { User: foundUser, Closed: false } })
-    var closedCFDs = await getRepository(CFD).find({ where: { Closed: true } });
+    var longCFDs: LongCFD[] = trader.getLongCFDs() || [];
+    var shortCFDs: ShortCFD[] = trader.getShortCFDs() || [];
+    //var closedCFDs =  @CHANGE
 
     GenerateCFDTables(longCFDs, shortCFDs);
 
-    CFDMenu(false, user);
+    CFDMenu(false, trader);
 }
 
+
+//@CHANGE put this in utilities maybe
 function GenerateCFDTables(longCFDs: LongCFD[], shortCFDs: ShortCFD[]): void {
     //make table now with cfds...
     if (longCFDs.length == 0 && shortCFDs.length == 0) {

@@ -66,7 +66,7 @@ export class Asset extends BaseEntity implements Subject {
     }
 
     /**
-     * Methods
+     * Gets
      */
 
     public GetAcronym(): string {
@@ -101,6 +101,34 @@ export class Asset extends BaseEntity implements Subject {
         return this.ChangePercentage;
     }
 
+    /**
+     * Sets
+     */
+
+    public SetValue(value: number): void {
+        this.Value = value;
+    }
+
+    public SetBuyPrice(buy: number) {
+        this.BuyPrice = buy;
+    }
+
+    public SetSellPrice(sell: number) {
+        this.SellPrice = sell;
+    }
+
+    public SetChange(change: number): void {
+        this.Change = change;
+    }
+
+    public SetChangePercentage(percentage: number): void {
+        this.ChangePercentage = percentage;
+    }
+
+
+
+    // Methods
+
     public async UpdateAsset() {
         var response = await si.getSingleStockInfo(this.GetAcronym());
         var apiResponse = new ApiResponse(response);
@@ -112,6 +140,9 @@ export class Asset extends BaseEntity implements Subject {
         this.notifyObservers();
     }
 
+
+    // Subject methods
+
     registerObserver(observer: Observer) {
         console.log('pushed obs')
         this.observers.push(observer);
@@ -121,6 +152,7 @@ export class Asset extends BaseEntity implements Subject {
         this.observers.splice(index, 1);
     }
     notifyObservers() {
+        console.log('\ notifying observers...')
         for (let observer of this.observers) {
             observer.update(this);
         }

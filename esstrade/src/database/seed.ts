@@ -1,9 +1,9 @@
-//local
+import si = require('stock-info');
 import { AssetType } from '../classes/asset_type';
 import { Asset } from '../classes/asset';
 import { User } from '../classes/user';
-import { CFD } from '../classes/cfd';
-import { LongCFD } from '../classes/longcfd';
+import { ApiResponse } from '../classes/api/api_response';
+import { create } from 'domain';
 
 /**
  * 
@@ -14,7 +14,7 @@ VALUES (1, 0.1, 0, 0, NOW(), NOW(), 0, 7500, 0, 'LongCFD', 1, 1);
 INSERT INTO cfd (id,amount,take_profit,stop_loss,start_date,end_date,closed,buy_price,sell_price,cfd_type,assetId,userId) 
 VALUES (2, 0.1, 0, 0, NOW(), NOW(), 0, 0, 7500, 'ShortCFD', 1, 1)
 **/
-export async function SeedDatabase() {
+export async function SeedDatabase(): Promise<Asset[]> {
 
     //Dummy User
     var user = new User("test", "1", "test");
@@ -31,95 +31,111 @@ export async function SeedDatabase() {
     var asset_type_coin = new AssetType("Coin");
     await asset_type_coin.save();
 
+
+    var assets: Asset[] = [];
+
     //Assets
     // - Stocks
-    var asset_google = new Asset(
+    var asset_google = await createAsset(
         "GOOG",
         "Alphabet Inc.",
-        asset_type_stock, 0, 0, 0, 0.5, 0.5);
-    await asset_google.UpdateAsset();
+        asset_type_stock);
     await asset_google.save();
+    assets.push(asset_google);
 
-    var asset_apple = new Asset(
+    var asset_apple = await createAsset(
         "AAPL",
         "Apple Inc.",
-        asset_type_stock, 0, 0, 0, 0.5, 0.5);
-    await asset_apple.UpdateAsset();
+        asset_type_stock);
     await asset_apple.save();
+    assets.push(asset_apple);
 
 
-    var asset_nvidia = new Asset(
+    var asset_nvidia = await createAsset(
         "NVDA",
         "NVIDIA Corporation",
-        asset_type_stock, 0, 0, 0, 0.5, 0.5);
-    await asset_nvidia.UpdateAsset();
+        asset_type_stock)
     await asset_nvidia.save();
+    assets.push(asset_nvidia);
 
-    var asset_alibaba = new Asset(
+    var asset_alibaba = await createAsset(
         "BABA",
         "Alibaba Group Holding Limited",
-        asset_type_stock, 0, 0, 0, 0.5, 0.5);
-    await asset_alibaba.UpdateAsset();
+        asset_type_stock)
     await asset_alibaba.save();
+    assets.push(asset_alibaba);
 
-    var asset_ibm = new Asset(
+    var asset_ibm = await createAsset(
         "IBM",
         "International Business Machines Corporation",
-        asset_type_stock, 0, 0, 0, 0.5, 0.5);
-    await asset_ibm.UpdateAsset();
+        asset_type_stock)
     await asset_ibm.save();
+    assets.push(asset_ibm);
 
     // - Commodities
-    var asset_gold = new Asset(
+    var asset_gold = await createAsset(
         "GC=F",
         "Gold",
-        asset_type_commodity, 0, 0, 0, 0.5, 0.5);
-    await asset_gold.UpdateAsset();
+        asset_type_commodity)
     await asset_gold.save();
+    assets.push(asset_gold);
 
-    var asset_silver = new Asset(
+    var asset_silver = await createAsset(
         "SI=F",
         "Silver",
-        asset_type_commodity, 0, 0, 0, 0.5, 0.5);
-    await asset_silver.UpdateAsset();
+        asset_type_commodity)
     await asset_silver.save();
+    assets.push(asset_silver);
 
-    var asset_oil = new Asset(
+    var asset_oil = await createAsset(
         "CL=F",
         "Crude Oil",
-        asset_type_commodity, 0, 0, 0, 0.5, 0.5);
-    await asset_oil.UpdateAsset();
+        asset_type_commodity)
     await asset_oil.save();
+    assets.push(asset_oil);
 
     // - Coins
-    var asset_euro = new Asset(
+    var asset_euro = await createAsset(
         "EURUSD=X",
         "EUR/USD",
-        asset_type_coin, 0, 0, 0, 0.5, 0.5);
-    await asset_euro.UpdateAsset();
+        asset_type_coin)
     await asset_euro.save();
+    assets.push(asset_euro);
 
-    var asset_pound = new Asset(
+    var asset_pound = await createAsset(
         "GBPUSD=X",
         "GBP/USD",
-        asset_type_coin, 0, 0, 0, 0.5, 0.5);
-    await asset_pound.UpdateAsset();
+        asset_type_coin)
     await asset_pound.save();
+    assets.push(asset_pound);
 
-    var asset_renminbi = new Asset(
+    var asset_renminbi = await createAsset(
         "CNYUSD=X",
         "CNY/USD",
-        asset_type_coin, 0, 0, 0, 0.5, 0.5);
-    await asset_renminbi.UpdateAsset();
+        asset_type_coin)
     await asset_renminbi.save();
+    assets.push(asset_renminbi);
 
-    var asset_yen = new Asset(
+    var asset_yen = await createAsset(
         "JPYUSD=X",
         "JPY/USD",
-        asset_type_coin, 0, 0, 0, 0.5, 0.5);
-    await asset_yen.UpdateAsset();
+        asset_type_coin)
     await asset_yen.save();
+    assets.push(asset_yen);
 
     console.log('Asset information retrieved...!');
+
+    return assets;
 }
 
+async function createAsset(acronym: string, name: string, asset_type: AssetType): Promise<Asset> {
+    var response: ApiResponse = await getApiResponse(acronym);
+    var asset = new Asset(acronym, name, asset_type, response.Price, response.Buy, response.Sell, response.Change, response.ChangePercentage);
+    return asset;
+}
+
+async function getApiResponse(acronym: string): Promise<ApiResponse> {
+    var response = await si.getSingleStockInfo(acronym);
+    var apiResponse = new ApiResponse(response);
+    return apiResponse;
+}

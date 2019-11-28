@@ -8,25 +8,25 @@ import { SeedDatabase } from './database/seed';
 import { Asset } from './classes/asset';
 
 //run constant updates to the assets...
-async function SynchAssets() {
-    var assets = await getRepository(Asset).find();
-    for (let index = 0; index < assets.length; index++) {
-        var asset = assets[index];
-        await asset.UpdateAsset();
-        await asset.save();
-    }
-}
 
-createConnection().then(connection => {
+
+createConnection().then(async connection => {
     //console.log(connection)
     console.log(connection);
     clear();
     console.log('Connecting...')
     SeedDatabase()
-        .then(() => {
-            MainMenu(false);
+        .then((assets: Asset[]) => {
+            MainMenu(false, assets);
 
-            setInterval(SynchAssets, 8000) //run assets on the side...
+/*             setInterval(async function (assets: Asset[]) {
+                console.log(assets);
+                for (let index = 0; index < assets.length; index++) {
+                    var asset = assets[index];
+                    await asset.UpdateAsset();
+                    await asset.save();
+                }
+            }, 10000) //run assets on the side... */
         })
         .catch(error => {
             console.log(error);

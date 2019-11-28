@@ -1,16 +1,16 @@
 import { getRepository } from 'typeorm';
 import inquirer from "inquirer";
 import clear from 'clear';
-//local
+import chalk from 'chalk';
 import { Asset } from '../classes/asset';
 import { AssetType } from '../classes/asset_type';
 import { CreateTable } from '../utilities/table';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from './logged_menu';
 import { User } from '../classes/user';
-import chalk from 'chalk';
+import { Trader } from '../classes/trader';
 
-export async function CheckAssets(user: User) {
+export async function CheckAssets(trader: Trader) {
 
     let asset_types = await getRepository(AssetType).find();
     var types: any[];
@@ -28,16 +28,17 @@ export async function CheckAssets(user: User) {
         choices: types
     }).then(async answers => {
 
-        let asset_type: AssetType[];
-        asset_type = [];
-        let assets: Asset[];
-        assets = [];
+        var assets: Asset[] = trader.getAssets();
 
         if (answers.type != "All") {
-            asset_type = await getRepository(AssetType).find({ where: { Name: answers.type } });
-            assets = await getRepository(Asset).find({ where: { AssetType: { Id: asset_type[0].GetId() } } });
+            var asset_type: AssetType = await getRepository(AssetType).findOne({ where: { Name: answers.type } });
+            assets = assets.filter((asset: Asset) => {
+                if (asset.GetAssetType().GetName() == asset_type.GetName()) {
+                    return asset
+                }
+            })
         } else {
-            assets = await getRepository(Asset).find();
+            assets = trader.getAssets();
         }
 
         let assetRows: any[];
@@ -72,9 +73,7 @@ export async function CheckAssets(user: User) {
 
         clear();
         console.log(table.toString())
-        if (user != null)
-            LoggedMenu(false, user);
-        else
-            MainMenu(false);
+
+        LoggedMenu(false, trader);
     })
 }

@@ -72,7 +72,7 @@ export abstract class CFD extends BaseEntity implements Observer {
         this.Closed = Closed;
 
         this.subject = Asset;
-        //Asset.registerObserver(this);
+        //this.subject.registerObserver(this);
     }
 
     /**
@@ -99,6 +99,26 @@ export abstract class CFD extends BaseEntity implements Observer {
     }
 
     public update(asset: Asset) {
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('I HAVE BEEN NOTIFIED')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+        console.log('\n')
+
         this.Asset = asset;
     }
 

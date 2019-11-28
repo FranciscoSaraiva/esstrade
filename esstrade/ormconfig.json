@@ -9,9 +9,9 @@
    "dropSchema": true,
    "logging": false,
    "entities": [
-      "build/models/*.js"
+      "build/classes/*.js"
    ],
    "cli": {
-      "entitiesDir": "src/models"
+      "entitiesDir": "src/classes"
    }
 }

@@ -9,11 +9,24 @@ import { MainMenu } from './main_menu';
 import { EditProfile } from './edit_profile';
 import { AddBalance } from './add_balance';
 import { GetPortfolios } from './get_portfolios';
+import { Trader } from '../classes/trader';
+import { Asset } from '../classes/asset';
+import { ShortCFD } from '../classes/shortcfd';
+import { LongCFD } from '../classes/longcfd';
 
-export async function LoggedMenu(clear_screen: boolean, user: User) {
+export async function LoggedMenu(clear_screen: boolean, trader: Trader) {
     if (clear_screen) {
         clear();
     }
+
+    //global variables
+    var user: User = trader.getUser();
+    var assets: Asset[] = trader.getAssets();
+    var longCFDs: LongCFD[] = trader.getLongCFDs();
+    var shortCFDs: ShortCFD[] = trader.getShortCFDs();
+    var closedLongCFDs: LongCFD[] = trader.getClosedLongCFDs();
+    var closedShortCFDs: ShortCFD[] = trader.getClosedShortCFDs();
+
 
     console.log(boxen(
         chalk.blue('Email: ') + user.GetEmail() + '\n' +
@@ -30,7 +43,7 @@ export async function LoggedMenu(clear_screen: boolean, user: User) {
     //Menu options
     var portfolio = chalk.blue('Check my portfolio');
     var addBalance = chalk.blue('Add balance');
-    var assets = chalk.greenBright("Check assets");
+    var checkAssets = chalk.greenBright("Check assets");
     var profile = chalk.green('Edit my profile');
     var logout = chalk.red('Logout');
 
@@ -39,33 +52,33 @@ export async function LoggedMenu(clear_screen: boolean, user: User) {
             type: "list",
             name: "option",
             message: "Choose a menu option",
-            choices: [portfolio, addBalance, assets, new inquirer.Separator(), profile, new inquirer.Separator(), logout]
+            choices: [portfolio, addBalance, checkAssets, new inquirer.Separator(), profile, new inquirer.Separator(), logout]
         }
     )
         .then(answers => {
             switch (answers.option) {
                 case portfolio:
-                    GetPortfolios(true, user);
+                    GetPortfolios(true, trader);
                     break;
                 case addBalance:
-                    AddBalance(user);
+                    AddBalance(trader);
                     break;
-                case assets:
-                    CheckAssets(user);
+                case checkAssets:
+                    CheckAssets(trader);
                     break;
                 case profile:
-                    EditProfile(user);
+                    EditProfile(trader);
                     break;
                 case logout:
-                    Logout(user);
+                    Logout(trader);
                     break;
                 default:
-                    LoggedMenu(true, user);
+                    LoggedMenu(true, trader);
             }
         })
 }
 
-function Logout(user: User): void {
-    console.log(`Logged out from user ${user.GetEmail()}`)
-    MainMenu(true);
+function Logout(trader: Trader): void {
+    console.log(`Logged out from user ${trader.getUser().GetEmail()}`)
+    MainMenu(true, trader.getAssets());
 }

@@ -4,9 +4,10 @@ import clear = require('clear');
 import { User } from '../classes/user';
 import inquirer = require('inquirer');
 import { LoggedMenu } from './logged_menu';
+import { Trader } from '../classes/trader';
 
 
-export function EditProfile(user: User) {
+export function EditProfile(trader: Trader) {
     inquirer.prompt([
         { type: "input", name: "firstName", message: "First Name: (press enter to skip)" },
         { type: "input", name: "lastName", message: "Last Name: (press enter to skip)" },
@@ -17,19 +18,19 @@ export function EditProfile(user: User) {
         var password = answers.password;
 
         if (firstName != "")
-            user.SetFirstName(firstName);
+            trader.getUser().SetFirstName(firstName);
 
         if (lastName != "")
-            user.SetLastName(lastName);
+            trader.getUser().SetLastName(lastName);
 
         if (password != "")
-            user.SetPassword(password);
+            trader.getUser().SetPassword(password);
 
-        await user.save();
+        await trader.getUser().save();
 
         clear();
         console.log(chalk.blue('User profile updated.'));
 
-        LoggedMenu(false, user);
+        LoggedMenu(false, trader);
     })
 }

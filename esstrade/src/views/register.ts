@@ -2,13 +2,13 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear';
-//local
+import { getRepository } from 'typeorm';
 import { User } from '../classes/user';
 import { MainMenu } from './main_menu';
-import { getRepository } from 'typeorm';
+import { Asset } from '../classes/asset';
 
 
-export function Register(): void {
+export function Register(assets: Asset[]): void {
     inquirer.prompt([
         { type: "input", name: "email", message: "Email: " },
         { type: "password", name: "password", mask: "*", message: "Password: " },
@@ -33,17 +33,17 @@ export function Register(): void {
 
                         if (user.CheckIfEmailIsTaken(email)) {
                             console.log(chalk.red('This email is already taken, use a different email for registration.\n'))
-                            MainMenu(false);
+                            MainMenu(false, assets);
                         } else {
                             var newUser = new User(username, password, email);
                             newUser.save()
                                 .then(user => {
                                     console.log(chalk.red(`User with email ${user.GetEmail()} created!\n`));
-                                    MainMenu(false);
+                                    MainMenu(false, assets);
                                 })
                         }
                     } else {
-                        MainMenu(true);
+                        MainMenu(true, assets);
                     }
                 })
         });

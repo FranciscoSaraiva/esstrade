@@ -1,13 +1,14 @@
-import { User } from '../classes/user';
 import inquirer, { Question } from 'inquirer';
+import clear from 'clear';
+import { getRepository } from 'typeorm';
+import { CFDMenu } from './cfd_menu';
 import { LongCFD } from '../classes/longcfd';
 import { ShortCFD } from '../classes/shortcfd';
 import { Asset } from '../classes/asset';
-import { getRepository } from 'typeorm';
-import clear from 'clear';
-import { CFDMenu } from './cfd_menu';
+import { Trader } from '../classes/trader';
+import { User } from '../classes/user';
 
-export function OpenCFD(user: User) {
+export function OpenCFD(trader: Trader) {
 
 
     var questions: Question[];
@@ -20,7 +21,7 @@ export function OpenCFD(user: User) {
                 if (asset != undefined) {
                     return true
                 } else {
-                    return "The asset does not exist, try again";
+                    return "The asset does not exist, input an existing asset";
                 }
             }
         },
@@ -32,6 +33,8 @@ export function OpenCFD(user: User) {
         { type: "input", name: "stopLoss", message: "Stop Loss (enter to skip): " }
     ];
 
+    var assets: Asset[] = trader.getAssets();
+    var user: User = trader.getUser();
 
     inquirer.prompt(
         {
@@ -52,7 +55,20 @@ export function OpenCFD(user: User) {
                             var takeProfit = (answers.takeProfit != "") ? answers.takeProfit : null;
                             var stopLoss = (answers.stopLoss != "") ? answers.stopLoss : null;
 
-                            var asset = await getRepository(Asset).findOne({ where: { Acronym: symbol } });
+                            var asset: Asset = assets.find(asset => asset.GetAcronym() == symbol);
+                            console.log(assets);
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
+                            
+                            console.log(asset);
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
+                            console.log('\n');
                             var cfd = new LongCFD(asset, user, amount, takeProfit, stopLoss, new Date(), null, false, asset.GetBuyPrice());
 
                             var value = asset.GetBuyPrice() * cfd.GetAmount();
@@ -63,10 +79,12 @@ export function OpenCFD(user: User) {
                             user.UpdateCapital();
                             await user.save();
                             await cfd.save();
+                            trader.getLongCFDs().push(cfd);
+                            trader.setLongCFDs(trader.getLongCFDs());
 
                             clear();
                             console.log('Buy CFD for ' + asset.GetAcronym() + ' created.\n')
-                            CFDMenu(false, user);
+                            CFDMenu(false, trader);
                             return;
                         })
                     break;
@@ -79,7 +97,7 @@ export function OpenCFD(user: User) {
                             var takeProfit = (answers.takeProfit != "") ? answers.takeProfit : null;
                             var stopLoss = (answers.stopLoss != "") ? answers.stopLoss : null;
 
-                            var asset = await getRepository(Asset).findOne({ where: { Acronym: symbol } });
+                            var asset: Asset = assets.find(asset => asset.GetAcronym() == symbol);
                             var cfd = new ShortCFD(asset, user, amount, takeProfit, stopLoss, new Date(), null, false, asset.GetSellPrice());
 
                             var value = asset.GetBuyPrice() * cfd.GetAmount();
@@ -90,15 +108,17 @@ export function OpenCFD(user: User) {
                             user.UpdateCapital();
                             await user.save();
                             await cfd.save();
+                            trader.getShortCFDs().push(cfd)
+                            trader.setShortCFDs(trader.getShortCFDs());
 
                             clear();
                             console.log('Sell CFD for ' + asset.GetAcronym() + ' created.\n')
-                            CFDMenu(false, user);
+                            CFDMenu(false, trader);
                             return;
                         })
                     break;
                 case "Exit":
-                    CFDMenu(true, user);
+                    CFDMenu(true, trader);
                     break;
             }
         })

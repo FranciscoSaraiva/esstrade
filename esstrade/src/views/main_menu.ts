@@ -2,13 +2,12 @@ import chalk from 'chalk';
 import clear from 'clear'
 import figlet from 'figlet';
 import inquirer from "inquirer";
-//local
 import { Register } from './register';
 import { Login } from './login';
-import { CheckAssets } from './check_assets';
+import { Asset } from '../classes/asset';
 
 
-export function MainMenu(clear_screen: boolean): void {
+export function MainMenu(clear_screen: boolean, assets: Asset[]): void {
 
     if (clear_screen) {
         clear();
@@ -22,31 +21,28 @@ export function MainMenu(clear_screen: boolean): void {
 
     let register = chalk.yellow("Register");
     let login = chalk.yellowBright("Login");
-    let assets = chalk.greenBright("Check assets");
+    //let assets = chalk.greenBright("Check assets");
     let exit = chalk.red("Exit");
 
     inquirer.prompt({
         type: "list",
         name: "option",
         message: "Choose a menu option",
-        choices: [register, login, new inquirer.Separator(), assets, new inquirer.Separator(), exit]
+        choices: [register, login, new inquirer.Separator(), exit]
     })
         .then(answers => {
             switch (answers.option) {
                 case register:
-                    Register();
+                    Register(assets);
                     break;
                 case login:
-                    Login();
-                    break;
-                case assets:
-                    CheckAssets(null);
+                    Login(assets);
                     break;
                 case exit:
                     ExitApp();
                     break;
                 default:
-                    MainMenu(true);
+                    MainMenu(true, assets);
                     break;
             }
         })

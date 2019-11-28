@@ -1,45 +1,44 @@
-//local
-import { User } from '../classes/user';
-import inquirer = require('inquirer');
-import { getRepository } from 'typeorm';
+import clear from 'clear';
+import inquirer from 'inquirer';
+import chalk from 'chalk';
 import { LongCFD } from '../classes/longcfd';
-import { CFDMenu } from './cfd_menu';
 import { ShortCFD } from '../classes/shortcfd';
-import { CFD } from '../classes/cfd';
-import clear = require('clear');
+import { Trader } from '../classes/trader';
+import { CFDMenu } from './cfd_menu';
 import { GetPortfolios } from './get_portfolios';
 
-export function CloseCFD(user: User): void {
+export function CloseCFD(trader: Trader): void {
 
     inquirer
         .prompt({
             type: "input",
             name: "id",
-            message: "Please indicate the ID of the CFD you wish to close: "
+            message: "Please indicate the ID of the CFD you wish to close: ",
+            validate: function (input) { if (input > 0) { return true } else return "Please enter an id greater than 0"; }
         })
         .then(async answer => {
 
-            var longCFDs: LongCFD[];
-            longCFDs = await getRepository(LongCFD).find({ where: { User: user, Closed: false } })
-            var shortCFDs: ShortCFD[];
-            shortCFDs = await getRepository(ShortCFD).find({ where: { User: user, Closed: false } })
+            //get list of open cfds
+            var longCFDs: LongCFD[] = trader.getLongCFDs() || [];
+            var shortCFDs: ShortCFD[] = trader.getShortCFDs() || [];
 
-            var longcfd: LongCFD;
-            var shortcfd: ShortCFD;
-            longcfd = await getRepository(LongCFD).findOne({ where: { Id: answer.id, Closed: false } });
-            shortcfd = await getRepository(ShortCFD).findOne({ where: { Id: answer.id, Closed: false } });
+            //get their indexes
+            var indexLong = longCFDs.findIndex(long => long.GetId() == answer.id);
+            var longcfd: LongCFD = longCFDs[indexLong];
+
+            var indexShort = shortCFDs.findIndex(short => short.GetId() == answer.id);
+            var shortcfd: ShortCFD = shortCFDs[indexShort];
 
             if (longcfd == undefined && shortcfd == undefined) {
                 clear();
-                console.log('There is no CFD with the given id, please enter an existing id');
-                CFDMenu(false, user);
+                console.log(chalk.red('There is no CFD with the given id, please enter an existing id\n'));
+                CFDMenu(false, trader);
             }
             else {
                 if (longcfd != undefined) {
                     clear();
                     await longcfd.CloseCFD();
                     await longcfd.save();
-                    user = longcfd.GetUser();
                     console.log('The CFD has been closed.\n');
 
                 }
@@ -47,10 +46,10 @@ export function CloseCFD(user: User): void {
                     clear();
                     await shortcfd.CloseCFD();
                     await shortcfd.save();
-                    user = longcfd.GetUser();
                     console.log('The CFD has been closed.\n');
                 }
-                GetPortfolios(false, user);
+
+                GetPortfolios(false, trader);
             }
 
         })
