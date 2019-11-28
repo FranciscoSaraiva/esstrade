@@ -9,7 +9,7 @@ export async function SeedDatabase() {
     var user = new User("test", "1", "test");
     user.SetFirstName('Test');
     user.SetLastName('Maximus');
-    user.AddBalance(100);
+    user.AddBalance(10000);
     await user.save();
 
     //AssetTypes

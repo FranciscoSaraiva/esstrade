@@ -23,7 +23,7 @@ export async function GetPortfolios(clear_screen: boolean, user: User) {
 
     GenerateCFDTables(longCFDs, shortCFDs);
 
-    CFDMenu(false, user, longCFDs, shortCFDs);
+    CFDMenu(false, user);
 }
 
 function GenerateCFDTables(longCFDs: LongCFD[], shortCFDs: ShortCFD[]): void {

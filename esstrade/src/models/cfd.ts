@@ -29,16 +29,16 @@ export abstract class CFD extends BaseEntity {
     @Column({ name: "amount", type: "double" })
     private Amount: number;
 
-    @Column({ name: "take_profit", type: "double" })
+    @Column({ name: "take_profit", type: "double", nullable: true })
     private TakeProfit: number;
 
-    @Column({ name: "stop_loss", type: "double" })
+    @Column({ name: "stop_loss", type: "double", nullable: true })
     private StopLoss: number;
 
     @Column({ name: "start_date", type: "datetime" })
     private StartDate: Date;
 
-    @Column({ name: "end_date", type: "datetime" })
+    @Column({ name: "end_date", type: "datetime", nullable: true })
     private EndDate: Date;
 
     @Column({ name: "closed", type: "bool" })

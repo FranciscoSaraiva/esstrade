@@ -32,13 +32,14 @@ export function CloseCFD(user: User): void {
             if (longcfd == undefined && shortcfd == undefined) {
                 clear();
                 console.log('There is no CFD with the given id, please enter an existing id');
-                CFDMenu(false, user, longCFDs, shortCFDs);
+                CFDMenu(false, user);
             }
             else {
                 if (longcfd != undefined) {
                     clear();
                     await longcfd.CloseCFD();
                     await longcfd.save();
+                    user = longcfd.GetUser();
                     console.log('The CFD has been closed.\n');
 
                 }
@@ -46,8 +47,8 @@ export function CloseCFD(user: User): void {
                     clear();
                     await shortcfd.CloseCFD();
                     await shortcfd.save();
+                    user = longcfd.GetUser();
                     console.log('The CFD has been closed.\n');
-
                 }
                 GetPortfolios(false, user);
             }

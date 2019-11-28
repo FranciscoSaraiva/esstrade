@@ -37,7 +37,7 @@ export class ShortCFD extends CFD {
 
     public async CloseCFD() {
         // ( amount x price of the asset at the time ) - ( amount x price of the asset at the moment of closing )
-        var profit = (this.SellPrice * this.GetAmount()) - (this.GetAsset().GetValue() * this.GetAmount());
+        var profit = (this.SellPrice * this.GetAmount()) - (this.GetAsset().GetBuyPrice() * this.GetAmount());
         // ( profit gained ) + ( amount x price of the asset when cfd started)
         var newBalance = profit + (this.SellPrice * this.GetAmount());
 

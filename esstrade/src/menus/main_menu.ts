@@ -32,7 +32,6 @@ export function MainMenu(clear_screen: boolean): void {
         choices: [register, login, new inquirer.Separator(), assets, new inquirer.Separator(), exit]
     })
         .then(answers => {
-            console.log(answers.option)
             switch (answers.option) {
                 case register:
                     Register();
