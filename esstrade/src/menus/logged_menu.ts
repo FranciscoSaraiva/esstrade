@@ -45,7 +45,7 @@ export async function LoggedMenu(clear_screen: boolean, user: User) {
         .then(answers => {
             switch (answers.option) {
                 case portfolio:
-                    GetPortfolios(user);
+                    GetPortfolios(true, user);
                     break;
                 case addBalance:
                     AddBalance(user);

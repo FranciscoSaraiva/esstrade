@@ -12,7 +12,7 @@ import { CloseCFD } from './close_cfd';
 
 
 
-export function CFDMenu(clean_screen: boolean, user: User, longcfds: LongCFD[], shortcfds: ShortCFD[], closedcfds: CFD[]) {
+export function CFDMenu(clean_screen: boolean, user: User, longcfds: LongCFD[], shortcfds: ShortCFD[]) {
 
     if (clean_screen)
         clear();

@@ -11,22 +11,24 @@ import { CFDMenu } from './cfd_menu';
 import { CreateTable } from '../utilities/table';
 
 
-export async function GetPortfolios(user: User) {
-    clear();
+export async function GetPortfolios(clear_screen: boolean, user: User) {
+
+    if (clear_screen)
+        clear();
 
     var foundUser = await getRepository(User).findOne({ where: { Email: user.GetEmail() } })
     var longCFDs = await getRepository(LongCFD).find({ where: { User: foundUser, Closed: false } })
     var shortCFDs = await getRepository(ShortCFD).find({ where: { User: foundUser, Closed: false } })
     var closedCFDs = await getRepository(CFD).find({ where: { Closed: true } });
 
-    GenerateCFDTables(longCFDs, shortCFDs, closedCFDs);
+    GenerateCFDTables(longCFDs, shortCFDs);
 
-    CFDMenu(false, user, longCFDs, shortCFDs, closedCFDs);
+    CFDMenu(false, user, longCFDs, shortCFDs);
 }
 
-function GenerateCFDTables(longCFDs: LongCFD[], shortCFDs: ShortCFD[], closedCFDs: CFD[]): void {
+function GenerateCFDTables(longCFDs: LongCFD[], shortCFDs: ShortCFD[]): void {
     //make table now with cfds...
-    if (longCFDs.length == 0 && shortCFDs.length == 0 && closedCFDs.length == 0) {
+    if (longCFDs.length == 0 && shortCFDs.length == 0) {
         console.log(chalk.blue('You have no CFDs in your portfolio...'))
     } else {
         var header = ["ID", "Type", "Asset", "Amount", "Invested", "Current", "Change"];

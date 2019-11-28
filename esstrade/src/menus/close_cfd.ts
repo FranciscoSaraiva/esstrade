@@ -7,6 +7,7 @@ import { CFDMenu } from './cfd_menu';
 import { ShortCFD } from '../models/shortcfd';
 import { CFD } from '../models/cfd';
 import clear = require('clear');
+import { GetPortfolios } from './get_portfolios';
 
 export function CloseCFD(user: User): void {
 
@@ -22,37 +23,33 @@ export function CloseCFD(user: User): void {
             longCFDs = await getRepository(LongCFD).find({ where: { User: user, Closed: false } })
             var shortCFDs: ShortCFD[];
             shortCFDs = await getRepository(ShortCFD).find({ where: { User: user, Closed: false } })
-            var closedCFDs: CFD[];
-            closedCFDs = await getRepository(CFD).find({ where: { Closed: true } }); //@CHANGE
-
-            console.log(longCFDs.length)
-            console.log(shortCFDs.length)
-            console.log(closedCFDs.length)
 
             var longcfd: LongCFD;
             var shortcfd: ShortCFD;
-            longcfd = await getRepository(LongCFD).findOne({ where: { Id: answer.id } });
-            shortcfd = await getRepository(ShortCFD).findOne({ where: { Id: answer.id } });
+            longcfd = await getRepository(LongCFD).findOne({ where: { Id: answer.id, Closed: false } });
+            shortcfd = await getRepository(ShortCFD).findOne({ where: { Id: answer.id, Closed: false } });
 
             if (longcfd == undefined && shortcfd == undefined) {
-                //clear();
+                clear();
                 console.log('There is no CFD with the given id, please enter an existing id');
-                CFDMenu(false, user, longCFDs, shortCFDs, closedCFDs);
+                CFDMenu(false, user, longCFDs, shortCFDs);
             }
             else {
                 if (longcfd != undefined) {
+                    clear();
                     await longcfd.CloseCFD();
                     await longcfd.save();
-                    console.log('The CFD has been closed.');
+                    console.log('The CFD has been closed.\n');
 
                 }
                 if (shortcfd != undefined) {
+                    clear();
                     await shortcfd.CloseCFD();
                     await shortcfd.save();
-                    console.log('The CFD has been closed.');
+                    console.log('The CFD has been closed.\n');
 
                 }
-                CFDMenu(false, user, longCFDs, shortCFDs, closedCFDs);
+                GetPortfolios(false, user);
             }
 
         })
