@@ -46,9 +46,6 @@ export function MainMenu(clear_screen: boolean): void {
                 case exit:
                     ExitApp();
                     break;
-                /*                 case "test yahoo":
-                                    testYahoo();
-                                    break; */
                 default:
                     MainMenu(true);
                     break;
@@ -64,7 +61,7 @@ function ExitApp(): void {
 
 /* var si = require('stock-info');
 function testYahoo(): void {
-    si.getSingleStockInfo('FB')
+    si.getSingleStockInfo('BTC-USD')
         .then(stock => {
             console.log(stock)
             console.log({
@@ -76,4 +73,4 @@ function testYahoo(): void {
             })
             MainMenu(false);
         })
-} */
+}  */

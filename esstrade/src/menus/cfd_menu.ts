@@ -1,14 +1,14 @@
 
-import inquirer = require('inquirer');
-import clear = require('clear');
-import chalk = require('chalk');
+import inquirer from 'inquirer';
+import clear from 'clear';
+import chalk from 'chalk';
 //local
 import { User } from '../models/user';
 import { ShortCFD } from '../models/shortcfd';
 import { LongCFD } from '../models/longcfd';
 import { CFD } from '../models/cfd';
 import { LoggedMenu } from './logged_menu';
-import { CheckAssets } from './check_assets';
+import { CloseCFD } from './close_cfd';
 
 
 
@@ -17,8 +17,8 @@ export function CFDMenu(clean_screen: boolean, user: User, longcfds: LongCFD[], 
     if (clean_screen)
         clear();
 
-    var manageCFD = chalk.green('Manage open CFDs');
     var openCFD = chalk.green('Open new CFD');
+    var closeCFD = chalk.green('Close CFD');
     var exit = chalk.red('Go back');
 
     inquirer.prompt(
@@ -26,14 +26,15 @@ export function CFDMenu(clean_screen: boolean, user: User, longcfds: LongCFD[], 
             type: "list",
             name: "option",
             message: "Choose an option: ",
-            choices: [manageCFD, openCFD, new inquirer.Separator(), exit]
+            choices: [openCFD, closeCFD, new inquirer.Separator(), exit]
         }
     )
         .then(answers => {
             switch (answers.option) {
-                case manageCFD:
-                    break;
                 case openCFD:
+                    break;
+                case closeCFD:
+                    CloseCFD(user);
                     break;
                 case exit:
                     LoggedMenu(true, user);

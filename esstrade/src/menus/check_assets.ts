@@ -8,6 +8,7 @@ import { CreateTable } from '../utilities/table';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from './logged_menu';
 import { User } from '../models/user';
+import chalk from 'chalk';
 
 export async function CheckAssets(user: User) {
 
@@ -44,11 +45,28 @@ export async function CheckAssets(user: User) {
         for (let index = 0; index < assets.length; index++) {
             const asset = assets[index];
             await asset.UpdateAsset();
-            assetRows.push([asset.GetAcronym(), asset.GetName(), asset.GetAssetType().GetName(), asset.GetValue(), asset.GetBuyPrice(), asset.GetSellPrice(), asset.GetChange()]);
+            await asset.save();
+            var acronym = asset.GetAcronym();
+            var name = asset.GetName();
+            var type = asset.GetAssetType().GetName();
+            var value = asset.GetValue() + '$';
+            var buyPrice = asset.GetBuyPrice() + ' $';
+            var sellPrice = asset.GetSellPrice() + ' $';
+            var change = (asset.GetChange() >= 0) ? chalk.green(asset.GetChange()) : chalk.red(asset.GetChange());
+            var changePercentage = (asset.GetChangePercent() >= 0) ? chalk.green(asset.GetChangePercent() + ' %') : chalk.red(asset.GetChangePercent() + ' %');
+            assetRows.push([
+                acronym,
+                name,
+                type,
+                value,
+                buyPrice,
+                sellPrice,
+                change,
+                changePercentage])
         }
 
         let table = CreateTable(
-            ["Acronym", "Name", "Type", "Value", "Buy Price", "Sell Price", "Change"],
+            ["Acronym", "Name", "Type", "Value", "Buy Price", "Sell Price", "Change", "Change Percentage"],
             assetRows
         );
 

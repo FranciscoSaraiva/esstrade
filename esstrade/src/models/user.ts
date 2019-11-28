@@ -130,8 +130,28 @@ export class User extends BaseEntity {
         this.Password = password;
     }
 
+    public AddTotalAllocated(value: number): void {
+        this.TotalAllocated += value;
+    }
+
+    public RemoveTotalAllocated(value: number): void {
+        this.TotalAllocated -= value;
+    }
+
+    public AddProfit(value: number): void {
+        this.Profit += value;
+    }
+
+    public RemoveProfit(value: number): void {
+        this.Profit -= value;
+    }
+
     public AddBalance(amount: number): void {
         this.Balance += amount;
+    }
+
+    public UpdateCapital(): void {
+        this.Capital = this.Balance + this.TotalAllocated + this.Profit;
     }
 
 }

@@ -31,4 +31,22 @@ export class LongCFD extends CFD {
      * Methods
      */
 
+    public GetBuyPrice(): number {
+        return this.BuyPrice;
+    }
+
+    public async CloseCFD() {
+        // ( amount x price of the asset at the moment of closing ) - ( amount x price of the asset at the time )
+        var profit = (this.GetAsset().GetValue() * this.GetAmount()) - (this.BuyPrice * this.GetAmount());
+        // ( profit gained ) + ( amount x price of the asset when cfd started)
+        var newBalance = profit + (this.BuyPrice * this.GetAmount());
+
+        this.GetUser().AddBalance(newBalance);
+        this.GetUser().RemoveTotalAllocated((this.BuyPrice * this.GetAmount()))
+        this.GetUser().RemoveProfit(profit);
+        this.GetUser().UpdateCapital();
+        await this.GetUser().save();
+        this.SetClosed(true);
+    }
+
 }

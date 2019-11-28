@@ -71,9 +71,24 @@ export abstract class CFD extends BaseEntity {
     /**
      * Methods
      */
+    public GetId(): number {
+        return this.Id;
+    }
 
     public GetUser(): User {
         return this.User;
+    }
+
+    public GetAsset(): Asset {
+        return this.Asset;
+    }
+
+    public GetAmount(): number {
+        return this.Amount;
+    }
+
+    public SetClosed(value: boolean): void {
+        this.Closed = value;
     }
 
 }

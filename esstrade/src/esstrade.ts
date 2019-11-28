@@ -13,6 +13,7 @@ async function SynchAssets() {
     for (let index = 0; index < assets.length; index++) {
         var asset = assets[index];
         await asset.UpdateAsset();
+        await asset.save();
     }
 }
 
@@ -25,7 +26,7 @@ createConnection().then(connection => {
         .then(() => {
             MainMenu(false);
 
-            setInterval(SynchAssets, 5000) //run assets on the side...
+            setInterval(SynchAssets, 10000) //run assets on the side...
         })
         .catch(error => {
             console.log(error);

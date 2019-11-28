@@ -37,6 +37,9 @@ export class Asset extends BaseEntity {
     @Column({ name: "change", type: "double" })
     private Change: number;
 
+    @Column({ name: "change_percentage", type: "double" })
+    private ChangePercentage: number;
+
     /**
      * 
      * @param Id Id of the asset 
@@ -46,7 +49,7 @@ export class Asset extends BaseEntity {
      * @param BuyPrice Buy price of the asset
      * @param SellPrice Sell price of the asset
      */
-    constructor(Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Change: number) {
+    constructor(Acronym: string, Name: string, AssetType: AssetType, Value: number, BuyPrice: number, SellPrice: number, Change: number, ChangePercentage: number) {
         super();
         this.Acronym = Acronym;
         this.Name = Name;
@@ -55,6 +58,7 @@ export class Asset extends BaseEntity {
         this.BuyPrice = BuyPrice;
         this.SellPrice = SellPrice;
         this.Change = Change;
+        this.ChangePercentage = ChangePercentage;
     }
 
     /**
@@ -89,13 +93,17 @@ export class Asset extends BaseEntity {
         return this.Change;
     }
 
+    public GetChangePercent(): number {
+        return this.ChangePercentage;
+    }
+
     public async UpdateAsset() {
         var response = await si.getSingleStockInfo(this.GetAcronym());
         var apiResponse = new ApiResponse(response);
-
         this.Value = apiResponse.Price;
         this.BuyPrice = apiResponse.Buy;
         this.SellPrice = apiResponse.Sell;
         this.Change = apiResponse.Change;
+        this.ChangePercentage = apiResponse.ChangePercentage;
     }
 }
