@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear';
 //local
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import { MainMenu } from './main_menu';
 import { getRepository } from 'typeorm';
 

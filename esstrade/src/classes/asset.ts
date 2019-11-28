@@ -2,7 +2,7 @@ import { PrimaryGeneratedColumn, Column, Entity, BaseEntity, ManyToOne, Relation
 var si = require('stock-info');
 //local
 import { AssetType } from "./asset_type";
-import { ApiResponse } from "../api/api_response";
+import { ApiResponse } from "./api/api_response";
 
 @Entity("Asset")
 export class Asset extends BaseEntity {

@@ -2,12 +2,12 @@ import { getRepository } from 'typeorm';
 import inquirer from "inquirer";
 import clear from 'clear';
 //local
-import { Asset } from '../models/asset';
-import { AssetType } from '../models/asset_type';
+import { Asset } from '../classes/asset';
+import { AssetType } from '../classes/asset_type';
 import { CreateTable } from '../utilities/table';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from './logged_menu';
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import chalk from 'chalk';
 
 export async function CheckAssets(user: User) {

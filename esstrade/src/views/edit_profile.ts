@@ -1,7 +1,7 @@
 import chalk = require('chalk');
 import clear = require('clear');
 //local
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import inquirer = require('inquirer');
 import { LoggedMenu } from './logged_menu';
 

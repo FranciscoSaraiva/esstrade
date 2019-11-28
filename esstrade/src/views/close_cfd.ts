@@ -1,11 +1,11 @@
 //local
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import inquirer = require('inquirer');
 import { getRepository } from 'typeorm';
-import { LongCFD } from '../models/longcfd';
+import { LongCFD } from '../classes/longcfd';
 import { CFDMenu } from './cfd_menu';
-import { ShortCFD } from '../models/shortcfd';
-import { CFD } from '../models/cfd';
+import { ShortCFD } from '../classes/shortcfd';
+import { CFD } from '../classes/cfd';
 import clear = require('clear');
 import { GetPortfolios } from './get_portfolios';
 

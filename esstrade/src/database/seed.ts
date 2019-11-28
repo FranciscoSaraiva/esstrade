@@ -1,7 +1,7 @@
 //local
-import { AssetType } from '../models/asset_type';
-import { Asset } from '../models/asset';
-import { User } from '../models/user';
+import { AssetType } from '../classes/asset_type';
+import { Asset } from '../classes/asset';
+import { User } from '../classes/user';
 
 export async function SeedDatabase() {
 

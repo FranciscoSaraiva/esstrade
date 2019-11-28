@@ -4,7 +4,7 @@ import clear from 'clear'
 import boxen, { BorderStyle } from 'boxen';
 //local
 import { CheckAssets } from './check_assets';
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import { MainMenu } from './main_menu';
 import { EditProfile } from './edit_profile';
 import { AddBalance } from './add_balance';

@@ -3,9 +3,9 @@ import 'reflect-metadata';
 import { createConnection, getRepository } from 'typeorm';
 import clear from 'clear';
 //local
-import { MainMenu } from './menus/main_menu';
+import { MainMenu } from './views/main_menu';
 import { SeedDatabase } from './database/seed';
-import { Asset } from './models/asset';
+import { Asset } from './classes/asset';
 
 //run constant updates to the assets...
 async function SynchAssets() {

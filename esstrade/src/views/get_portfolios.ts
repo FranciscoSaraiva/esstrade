@@ -3,10 +3,10 @@ import clear from 'clear';
 import Table from 'cli-table';
 import { getRepository } from 'typeorm';
 //local
-import { User } from '../models/user';
-import { LongCFD } from '../models/longcfd';
-import { ShortCFD } from '../models/shortcfd';
-import { CFD } from '../models/cfd';
+import { User } from '../classes/user';
+import { LongCFD } from '../classes/longcfd';
+import { ShortCFD } from '../classes/shortcfd';
+import { CFD } from '../classes/cfd';
 import { CFDMenu } from './cfd_menu';
 import { CreateTable } from '../utilities/table';
 

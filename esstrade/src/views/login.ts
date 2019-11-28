@@ -2,7 +2,7 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { getRepository } from 'typeorm';
 //local
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from './logged_menu';
 import clear from 'clear';

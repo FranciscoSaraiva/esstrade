@@ -3,9 +3,9 @@ import inquirer from 'inquirer';
 import clear from 'clear';
 import chalk from 'chalk';
 //local
-import { User } from '../models/user';
-import { ShortCFD } from '../models/shortcfd';
-import { LongCFD } from '../models/longcfd';
+import { User } from '../classes/user';
+import { ShortCFD } from '../classes/shortcfd';
+import { LongCFD } from '../classes/longcfd';
 import { LoggedMenu } from './logged_menu';
 import { CloseCFD } from './close_cfd';
 import { OpenCFD } from './open_cfd';

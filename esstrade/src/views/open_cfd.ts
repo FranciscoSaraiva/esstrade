@@ -1,8 +1,8 @@
-import { User } from '../models/user';
+import { User } from '../classes/user';
 import inquirer, { Question } from 'inquirer';
-import { LongCFD } from '../models/longcfd';
-import { ShortCFD } from '../models/shortcfd';
-import { Asset } from '../models/asset';
+import { LongCFD } from '../classes/longcfd';
+import { ShortCFD } from '../classes/shortcfd';
+import { Asset } from '../classes/asset';
 import { getRepository } from 'typeorm';
 import clear from 'clear';
 import { CFDMenu } from './cfd_menu';
