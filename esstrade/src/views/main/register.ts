@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear';
 import { getRepository } from 'typeorm';
-import { User } from '../classes/user';
+import { User } from '../../classes/user';
 import { MainMenu } from './main_menu';
-import { Asset } from '../classes/asset';
+import { Asset } from '../../classes/asset';
 
 
 export function Register(assets: Asset[]): void {
@@ -31,7 +31,7 @@ export function Register(assets: Asset[]): void {
                         var user: User;
                         var user = await getRepository(User).findOne({ where: { Email: email } })
 
-                        if (user.CheckIfEmailIsTaken(email)) {
+                        if (user != undefined && user.CheckIfEmailIsTaken(email)) {
                             console.log(chalk.red('This email is already taken, use a different email for registration.\n'))
                             MainMenu(false, assets);
                         } else {

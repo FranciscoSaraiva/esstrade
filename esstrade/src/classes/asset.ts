@@ -3,8 +3,8 @@ var si = require('stock-info');
 //local
 import { AssetType } from "./asset_type";
 import { ApiResponse } from "./api/api_response";
-import { Subject } from './subject';
-import { Observer } from './observer';
+import { Subject } from './interfaces/subject';
+import { Observer } from './interfaces/observer';
 
 @Entity("Asset")
 export class Asset extends BaseEntity implements Subject {
@@ -125,8 +125,6 @@ export class Asset extends BaseEntity implements Subject {
         this.ChangePercentage = percentage;
     }
 
-
-
     // Methods
 
     public async UpdateAsset() {
@@ -140,7 +138,6 @@ export class Asset extends BaseEntity implements Subject {
         this.notifyObservers();
     }
 
-
     // Subject methods
 
     registerObserver(observer: Observer) {
@@ -152,7 +149,6 @@ export class Asset extends BaseEntity implements Subject {
         this.observers.splice(index, 1);
     }
     notifyObservers() {
-        console.log('\ notifying observers...')
         for (let observer of this.observers) {
             observer.update(this);
         }

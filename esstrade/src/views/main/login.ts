@@ -2,13 +2,13 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import clear from 'clear';
 import { getRepository } from 'typeorm';
-import { User } from '../classes/user';
+import { User } from '../../classes/user';
 import { MainMenu } from './main_menu';
-import { LoggedMenu } from './logged_menu';
-import { Asset } from '../classes/asset';
-import { Trader } from '../classes/trader';
-import { LongCFD } from '../classes/longcfd';
-import { ShortCFD } from '../classes/shortcfd';
+import { LoggedMenu } from '../user/logged_menu';
+import { Asset } from '../../classes/asset';
+import { Trader } from '../../classes/platform/trader';
+import { LongCFD } from '../../classes/longcfd';
+import { ShortCFD } from '../../classes/shortcfd';
 
 export function Login(assets: Asset[]): void {
     inquirer.prompt([
@@ -24,7 +24,7 @@ export function Login(assets: Asset[]): void {
             if (user != undefined && user.CheckLoginCredentials(email, password)) {
                 var trader: Trader = await CreateTrader(user, assets);
 
-                LoggedMenu(true, trader);
+                LoggedMenu(false, trader);
             } else {
                 clear();
                 console.log(chalk.red('Incorrect email/password, please try again'))
@@ -37,11 +37,14 @@ export function Login(assets: Asset[]): void {
 async function CreateTrader(user: User, assets: Asset[]): Promise<Trader> {
     var trader: Trader;
 
-    var longCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: false, User: { Email: user.GetEmail() } } });
-    var shortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: false, User: { Email: user.GetEmail() } } });
+    console.log(user);
+    var longCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: false, UserId: user.GetId() } });
+    console.log(longCFDs);
 
-    var closedLongCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: true, User: { Email: user.GetEmail() } } });;
-    var closedShortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: true, User: { Email: user.GetEmail() } } });;
+    var shortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: false, UserId: user.GetId() } });
+
+    var closedLongCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: true, UserId: user.GetId() } });;
+    var closedShortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: true, UserId: user.GetId() } });;
 
     trader = new Trader(user, assets, longCFDs, shortCFDs, closedLongCFDs, closedShortCFDs);
 

@@ -2,7 +2,7 @@ import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
 import { ChildEntity, Column, BaseEntity } from "typeorm";
-import { Subject } from './subject';
+import { Subject } from './interfaces/subject';
 
 @ChildEntity()
 export class LongCFD extends CFD {
@@ -12,7 +12,6 @@ export class LongCFD extends CFD {
 
     /**
      * 
-     * @param Id Id of the user 
      * @param Asset Asset the CFD is linked to
      * @param User User the CFD was created by
      * @param Amount Amount of units in the CFD

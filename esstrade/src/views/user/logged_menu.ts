@@ -4,15 +4,15 @@ import clear from 'clear'
 import boxen, { BorderStyle } from 'boxen';
 //local
 import { CheckAssets } from './check_assets';
-import { User } from '../classes/user';
-import { MainMenu } from './main_menu';
+import { User } from '../../classes/user';
+import { MainMenu } from '../main/main_menu';
 import { EditProfile } from './edit_profile';
 import { AddBalance } from './add_balance';
 import { GetPortfolios } from './get_portfolios';
-import { Trader } from '../classes/trader';
-import { Asset } from '../classes/asset';
-import { ShortCFD } from '../classes/shortcfd';
-import { LongCFD } from '../classes/longcfd';
+import { Trader } from '../../classes/platform/trader';
+import { Asset } from '../../classes/asset';
+import { ShortCFD } from '../../classes/shortcfd';
+import { LongCFD } from '../../classes/longcfd';
 
 export async function LoggedMenu(clear_screen: boolean, trader: Trader) {
     if (clear_screen) {

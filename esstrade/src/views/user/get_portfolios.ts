@@ -2,13 +2,13 @@ import chalk from 'chalk';
 import clear from 'clear';
 import Table from 'cli-table';
 import { getRepository } from 'typeorm';
-import { User } from '../classes/user';
-import { LongCFD } from '../classes/longcfd';
-import { ShortCFD } from '../classes/shortcfd';
-import { CFD } from '../classes/cfd';
-import { CFDMenu } from './cfd_menu';
-import { CreateTable } from '../utilities/table';
-import { Trader } from '../classes/trader';
+import { User } from '../../classes/user';
+import { LongCFD } from '../../classes/longcfd';
+import { ShortCFD } from '../../classes/shortcfd';
+import { CFD } from '../../classes/cfd';
+import { CFDMenu } from '../portfolio/cfd_menu';
+import { CreateTable } from '../../utilities/table';
+import { Trader } from '../../classes/platform/trader';
 
 
 export async function GetPortfolios(clear_screen: boolean, trader: Trader) {

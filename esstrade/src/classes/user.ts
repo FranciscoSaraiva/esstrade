@@ -74,6 +74,10 @@ export class User extends BaseEntity {
      * Methods
      */
 
+    public GetId(): number {
+        return this.Id;
+    }
+
     public GetUsername(): string {
         return this.Username;
     }

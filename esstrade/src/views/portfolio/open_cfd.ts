@@ -2,11 +2,11 @@ import inquirer, { Question } from 'inquirer';
 import clear from 'clear';
 import { getRepository } from 'typeorm';
 import { CFDMenu } from './cfd_menu';
-import { LongCFD } from '../classes/longcfd';
-import { ShortCFD } from '../classes/shortcfd';
-import { Asset } from '../classes/asset';
-import { Trader } from '../classes/trader';
-import { User } from '../classes/user';
+import { LongCFD } from '../../classes/longcfd';
+import { ShortCFD } from '../../classes/shortcfd';
+import { Asset } from '../../classes/asset';
+import { Trader } from '../../classes/platform/trader';
+import { User } from '../../classes/user';
 
 export function OpenCFD(trader: Trader) {
 

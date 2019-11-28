@@ -1,11 +1,11 @@
 import clear from 'clear';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { LongCFD } from '../classes/longcfd';
-import { ShortCFD } from '../classes/shortcfd';
-import { Trader } from '../classes/trader';
+import { LongCFD } from '../../classes/longcfd';
+import { ShortCFD } from '../../classes/shortcfd';
+import { Trader } from '../../classes/platform/trader';
 import { CFDMenu } from './cfd_menu';
-import { GetPortfolios } from './get_portfolios';
+import { GetPortfolios } from '../user/get_portfolios';
 
 export function CloseCFD(trader: Trader): void {
 

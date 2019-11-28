@@ -1,8 +1,8 @@
 import { User } from "./user";
 import { Asset } from "./asset";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance, RelationId, JoinColumn, BaseEntity } from "typeorm";
-import { Observer } from './observer';
-import { Subject } from './subject';
+import { Observer } from './interfaces/observer';
+import { Subject } from './interfaces/subject';
 
 @Entity("CFD")
 @TableInheritance({ column: { name: "cfd_type", type: "varchar" } })
@@ -72,7 +72,8 @@ export abstract class CFD extends BaseEntity implements Observer {
         this.Closed = Closed;
 
         this.subject = Asset;
-        //this.subject.registerObserver(this);
+        if (Asset != undefined)
+            Asset.registerObserver(this);
     }
 
     /**
@@ -86,8 +87,16 @@ export abstract class CFD extends BaseEntity implements Observer {
         return this.User;
     }
 
+    public GetUserId(): number {
+        return this.UserId;
+    }
+
     public GetAsset(): Asset {
         return this.Asset;
+    }
+
+    public GetAssetId(): number {
+        return this.AssetId;
     }
 
     public GetAmount(): number {
@@ -99,26 +108,7 @@ export abstract class CFD extends BaseEntity implements Observer {
     }
 
     public update(asset: Asset) {
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('I HAVE BEEN NOTIFIED')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-        console.log('\n')
-
+        console.log('I have been notified')
         this.Asset = asset;
     }
 

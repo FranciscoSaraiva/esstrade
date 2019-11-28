@@ -11,7 +11,6 @@ export class ShortCFD extends CFD {
 
     /**
      * 
-     * @param Id Id of the user 
      * @param Asset Asset the CFD is linked to
      * @param User User the CFD was created by
      * @param Amount Amount of units in the CFD

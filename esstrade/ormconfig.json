@@ -5,7 +5,7 @@
    "username": "root",
    "password": "password",
    "database": "esstrade",
-   "synchronize": true, 
+   "synchronize": true,
    "dropSchema": true,
    "logging": false,
    "entities": [

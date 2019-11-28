@@ -2,10 +2,10 @@
 import inquirer from 'inquirer';
 import clear from 'clear';
 import chalk from 'chalk';
-import { LoggedMenu } from './logged_menu';
+import { LoggedMenu } from '../user/logged_menu';
 import { CloseCFD } from './close_cfd';
 import { OpenCFD } from './open_cfd';
-import { Trader } from '../classes/trader';
+import { Trader } from '../../classes/platform/trader';
 
 
 
