@@ -3,9 +3,11 @@ var si = require('stock-info');
 //local
 import { AssetType } from "./asset_type";
 import { ApiResponse } from "./api/api_response";
+import { Subject } from './subject';
+import { Observer } from './observer';
 
 @Entity("Asset")
-export class Asset extends BaseEntity {
+export class Asset extends BaseEntity implements Subject {
 
     /**
      * Attributes
@@ -39,6 +41,8 @@ export class Asset extends BaseEntity {
 
     @Column({ name: "change_percentage", type: "double" })
     private ChangePercentage: number;
+
+    private observers: Observer[] = [];
 
     /**
      * 
@@ -105,5 +109,24 @@ export class Asset extends BaseEntity {
         this.SellPrice = apiResponse.Sell;
         this.Change = apiResponse.Change;
         this.ChangePercentage = apiResponse.ChangePercentage;
+        this.notifyObservers();
+    }
+
+    registerObserver(observer: Observer) {
+        console.log('pushed obs')
+        this.observers.push(observer);
+    }
+    removeObserver(observer: Observer) {
+        let index = this.observers.indexOf(observer);
+        this.observers.splice(index, 1);
+    }
+    notifyObservers() {
+        for (let observer of this.observers) {
+            observer.update(this);
+        }
+        for (let index = 0; index < this.observers.length; index++) {
+            const observer = this.observers[index];
+            observer.update(this);
+        }
     }
 }

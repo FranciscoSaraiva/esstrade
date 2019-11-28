@@ -26,7 +26,7 @@ createConnection().then(connection => {
         .then(() => {
             MainMenu(false);
 
-            setInterval(SynchAssets, 10000) //run assets on the side...
+            setInterval(SynchAssets, 8000) //run assets on the side...
         })
         .catch(error => {
             console.log(error);

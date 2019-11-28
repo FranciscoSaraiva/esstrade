@@ -2,7 +2,18 @@
 import { AssetType } from '../classes/asset_type';
 import { Asset } from '../classes/asset';
 import { User } from '../classes/user';
+import { CFD } from '../classes/cfd';
+import { LongCFD } from '../classes/longcfd';
 
+/**
+ * 
+use esstrade;
+INSERT INTO cfd (id,amount,take_profit,stop_loss,start_date,end_date,closed,buy_price,sell_price,cfd_type,assetId,userId) 
+VALUES (1, 0.1, 0, 0, NOW(), NOW(), 0, 7500, 0, 'LongCFD', 1, 1);
+
+INSERT INTO cfd (id,amount,take_profit,stop_loss,start_date,end_date,closed,buy_price,sell_price,cfd_type,assetId,userId) 
+VALUES (2, 0.1, 0, 0, NOW(), NOW(), 0, 0, 7500, 'ShortCFD', 1, 1)
+**/
 export async function SeedDatabase() {
 
     //Dummy User

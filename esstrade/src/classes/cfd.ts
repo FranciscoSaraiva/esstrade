@@ -1,10 +1,12 @@
 import { User } from "./user";
 import { Asset } from "./asset";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance, RelationId, JoinColumn, BaseEntity } from "typeorm";
+import { Observer } from './observer';
+import { Subject } from './subject';
 
 @Entity("CFD")
 @TableInheritance({ column: { name: "cfd_type", type: "varchar" } })
-export abstract class CFD extends BaseEntity {
+export abstract class CFD extends BaseEntity implements Observer {
 
     /**
     * Attributes
@@ -44,6 +46,8 @@ export abstract class CFD extends BaseEntity {
     @Column({ name: "closed", type: "bool" })
     private Closed: boolean;
 
+    private subject: Subject;
+
     /**
      * 
      * @param Id Id of the user 
@@ -66,6 +70,9 @@ export abstract class CFD extends BaseEntity {
         this.StartDate = StartDate;
         this.EndDate = EndDate;
         this.Closed = Closed;
+
+        this.subject = Asset;
+        //Asset.registerObserver(this);
     }
 
     /**
@@ -89,6 +96,10 @@ export abstract class CFD extends BaseEntity {
 
     public SetClosed(value: boolean): void {
         this.Closed = value;
+    }
+
+    public update(asset: Asset) {
+        this.Asset = asset;
     }
 
 }

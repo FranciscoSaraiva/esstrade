@@ -2,6 +2,7 @@ import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
 import { ChildEntity, Column, BaseEntity } from "typeorm";
+import { Subject } from './subject';
 
 @ChildEntity()
 export class LongCFD extends CFD {
