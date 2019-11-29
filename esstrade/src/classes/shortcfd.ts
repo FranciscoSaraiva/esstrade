@@ -49,15 +49,18 @@ export class ShortCFD extends CFD {
 
     public update(asset: Asset) {
         this.SetAsset(asset);
-
         if (this.GetTakeProfit() != null) {
-            if (this.IsTakeProfit())
+            if (this.IsTakeProfit()) {
                 this.CloseCFD();
+                console.log(`\nThe sell CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
+            }
         }
 
         if (this.GetStopLoss() != null) {
-            if (this.IsStopLoss())
+            if (this.IsStopLoss()) {
                 this.CloseCFD();
+                console.log(`\nThe sell CFD for ${this.GetAsset().GetAcronym()} has been closed because of the stop loss clause.`)
+            }
         }
     }
 
@@ -71,5 +74,6 @@ export class ShortCFD extends CFD {
         this.GetUser().UpdateCapital();
         await this.GetUser().save();
         this.SetClosed(true);
+        console.log(`\nThe Sell CFD for ${this.GetAsset().GetAcronym()} has been closed.`);
     }
 }

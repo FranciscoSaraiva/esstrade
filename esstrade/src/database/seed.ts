@@ -6,13 +6,6 @@ import { ApiResponse } from '../classes/api/api_response';
 
 export async function SeedDatabase(): Promise<Asset[]> {
 
-    //Dummy User
-    var user = new User("test", "1", "test");
-    user.SetFirstName('Test');
-    user.SetLastName('Maximus');
-    user.AddBalance(10000);
-    await user.save();
-
     //AssetTypes
     var asset_type_stock = new AssetType("Stock");
     await asset_type_stock.save();
@@ -114,6 +107,13 @@ export async function SeedDatabase(): Promise<Asset[]> {
     assets.push(asset_yen);
 
     console.log('Asset information retrieved...!');
+
+/*     //Dummy User
+    let user = new User("test", "1", "test", [asset_gold]);
+    user.SetFirstName('Test');
+    user.SetLastName('Maximus');
+    user.AddBalance(10000);
+    await user.save(); */
 
     return assets;
 }

@@ -1,5 +1,6 @@
 import inquirer, { Question } from 'inquirer';
 import clear from 'clear';
+import chalk from 'chalk';
 import { getRepository } from 'typeorm';
 import { CFDMenu } from './cfd_menu';
 import { LongCFD } from '../../classes/longcfd';
@@ -8,10 +9,12 @@ import { Asset } from '../../classes/asset';
 import { Trader } from '../../classes/platform/trader';
 import { User } from '../../classes/user';
 import { GetPortfolios } from '../user/get_portfolios';
-import chalk from 'chalk';
 
 export function OpenCFD(trader: Trader) {
 
+    trader.getAssets().forEach(asset => {
+        console.log(chalk.blue(`[ ${asset.GetAcronym()} - ${asset.GetName()} ]`))
+    });
 
     var questions: Question[];
     questions = [
@@ -23,12 +26,6 @@ export function OpenCFD(trader: Trader) {
                 if (asset != undefined) {
                     return true
                 } else {
-                    var names: string[] = [];
-                    trader.getAssets().forEach(asset => {
-                        names.push('[' + asset.GetAcronym() + ' - ' + asset.GetName() + ']\n')
-                    });
-
-                    console.log('\n' + chalk.red(names.toString()))
                     return "The asset does not exist, input an existing asset from the list.";
                 }
             }
@@ -63,7 +60,8 @@ export function OpenCFD(trader: Trader) {
                             var takeProfit = (answers.takeProfit != "") ? answers.takeProfit : null;
                             var stopLoss = (answers.stopLoss != "") ? answers.stopLoss : null;
 
-                            var asset: Asset = assets.find(asset => asset.GetAcronym() == symbol);
+                            var asset: Asset = trader.findAsset(symbol);
+                            console.log(asset)
                             var cfd = new LongCFD(asset, user, amount, takeProfit, stopLoss, new Date(), null, false, asset.GetBuyPrice());
 
                             var value = asset.GetBuyPrice() * cfd.GetAmount();
@@ -92,7 +90,7 @@ export function OpenCFD(trader: Trader) {
                             var takeProfit = (answers.takeProfit != "") ? answers.takeProfit : null;
                             var stopLoss = (answers.stopLoss != "") ? answers.stopLoss : null;
 
-                            var asset: Asset = assets.find(asset => asset.GetAcronym() == symbol);
+                            var asset: Asset = trader.findAsset(symbol);
                             var cfd = new ShortCFD(asset, user, amount, takeProfit, stopLoss, new Date(), null, false, asset.GetSellPrice());
 
                             var value = asset.GetBuyPrice() * cfd.GetAmount();

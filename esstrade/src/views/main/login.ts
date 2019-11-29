@@ -19,11 +19,13 @@ export function Login(assets: Asset[]): void {
             let password = answers.password;
 
             var user: User;
-            user = await getRepository(User).findOne({ where: { Email: email } });
-
+            user = await getRepository(User).findOne({ where: { Email: email } });            
+            //console.log(user);
+            
             if (user != undefined && user.CheckLoginCredentials(email, password)) {
+                user.SetSubject(user.GetFollows())
                 var trader: Trader = await CreateTrader(user, assets);
-                clear();
+                //clear();
                 LoggedMenu(false, trader);
             } else {
                 clear();
@@ -43,6 +45,8 @@ async function CreateTrader(user: User, assets: Asset[]): Promise<Trader> {
 
     var closedLongCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: true, User: user } });;
     var closedShortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: true, User: user } });;
+
+    //console.log(user);
 
     trader = new Trader(user, assets, longCFDs, shortCFDs, closedLongCFDs, closedShortCFDs);
 

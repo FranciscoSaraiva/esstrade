@@ -35,7 +35,7 @@ export function Register(assets: Asset[]): void {
                             console.log(chalk.red('This email is already taken, use a different email for registration.\n'))
                             MainMenu(false, assets);
                         } else {
-                            var newUser = new User(username, password, email);
+                            var newUser = new User(username, password, email, []);
                             newUser.save()
                                 .then(user => {
                                     console.log(chalk.red(`User with email ${user.GetEmail()} created!\n`));

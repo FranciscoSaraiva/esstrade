@@ -128,6 +128,8 @@ export class Asset extends BaseEntity implements Subject {
     // Methods
 
     public async UpdateAsset() {
+        var asset_copy = new Asset(this.Acronym, this.Name, this.AssetType, this.Value, this.BuyPrice, this.SellPrice, this.Change, this.ChangePercentage);
+
         var response = await si.getSingleStockInfo(this.GetAcronym());
         var apiResponse = new ApiResponse(response);
         this.Value = apiResponse.Price;
@@ -135,26 +137,22 @@ export class Asset extends BaseEntity implements Subject {
         this.SellPrice = apiResponse.Sell;
         this.Change = apiResponse.Change;
         this.ChangePercentage = apiResponse.ChangePercentage;
-        this.notifyObservers();
+
+        this.notifyObservers(asset_copy);
     }
 
     // Subject methods
 
     registerObserver(observer: Observer) {
-        console.log('pushed obs')
         this.observers.push(observer);
     }
     removeObserver(observer: Observer) {
         let index = this.observers.indexOf(observer);
         this.observers.splice(index, 1);
     }
-    notifyObservers() {
+    notifyObservers(asset: Asset) {
         for (let observer of this.observers) {
-            observer.update(this);
-        }
-        for (let index = 0; index < this.observers.length; index++) {
-            const observer = this.observers[index];
-            observer.update(this);
+            observer.update(asset);
         }
     }
 }

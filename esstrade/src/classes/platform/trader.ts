@@ -83,8 +83,13 @@ export class Trader {
 
     // methods
 
-    public startApplication(): void {
-
+    public findAsset(acronym: string): Asset {
+        return this.assets.find(asset => {
+            if (asset.GetAcronym() == acronym)
+                return asset
+            else
+                return undefined;
+        });
     }
 
 }

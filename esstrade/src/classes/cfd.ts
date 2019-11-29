@@ -124,7 +124,6 @@ export abstract class CFD extends BaseEntity implements Observer {
     }
 
     public update(asset: Asset) {
-        console.log('notified on cfd')
         this.Asset = asset;
     }
 

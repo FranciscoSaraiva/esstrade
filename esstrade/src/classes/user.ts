@@ -1,10 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn } from "typeorm";
-//local
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { CFD } from "./cfd";
+import { Asset } from './asset';
+import { Observer } from './interfaces/observer';
+import { Subject } from './interfaces/subject';
+import chalk from 'chalk';
 
 @Entity("User")
-
-export class User extends BaseEntity {
+export class User extends BaseEntity implements Observer {
 
     /**
      * Attributes
@@ -43,6 +45,12 @@ export class User extends BaseEntity {
     @JoinColumn()
     private CFDs: CFD[];
 
+    @ManyToMany(type => Asset, { eager: true })
+    @JoinTable()
+    private Follow: Asset[];
+
+    private subject: Subject[];
+
     /**
      * 
      * @param Id Id of the user 
@@ -57,17 +65,26 @@ export class User extends BaseEntity {
      * @param Profit Total money made from trading CFDs
      * @param Capital Capital value of the user in the platform
      */
-    constructor(Username: string, Password: string, Email: string) {
+    constructor(Username: string, Password: string, Email: string, Follow: Asset[]) {
         super();
         this.Username = Username;
         this.Password = Password;
         this.Email = Email;
         this.FirstName = "";
         this.LastName = "";
-        this.Balance = 0.0;
+        this.Balance = 10000;
         this.TotalAllocated = 0.0;
         this.Profit = 0.0;
         this.Capital = 0.0;
+        this.Follow = Follow;
+
+        this.subject = Follow;
+        if (Follow != undefined && Follow.length > 0) {
+            Follow.forEach(asset => {
+                if (asset != undefined)
+                    asset.registerObserver(this);
+            });
+        }
     }
 
     /**
@@ -84,6 +101,10 @@ export class User extends BaseEntity {
 
     public GetEmail(): string {
         return this.Email;
+    }
+
+    public GetPassword(): string {
+        return this.Password;
     }
 
     public GetFirstName(): string {
@@ -112,6 +133,10 @@ export class User extends BaseEntity {
 
     public GetCFDs(): CFD[] {
         return this.CFDs;
+    }
+
+    public GetFollows(): Asset[] {
+        return this.Follow;
     }
 
     public CheckLoginCredentials(email: string, password: string): boolean {
@@ -158,4 +183,28 @@ export class User extends BaseEntity {
         this.Capital = this.Balance + this.TotalAllocated + this.Profit;
     }
 
+    public FollowAsset(asset: Asset): void {
+        this.Follow.push(asset);
+    }
+
+    public SetSubject(assets: Asset[]) {
+        this.subject = assets;
+        if (assets != undefined && assets.length > 0) {
+            assets.forEach(asset => {
+                if (asset != undefined){
+                    asset.registerObserver(this);
+                }
+            });
+        }
+    }
+
+    update(asset: Asset) {
+        for (let index = 0; index < this.Follow.length; index++) {
+            var followed = this.Follow[index];
+            if (followed.GetAcronym() == asset.GetAcronym() && followed.GetValue() != asset.GetValue()) {
+                console.log(chalk.blue(`\nThe asset ${asset.GetAcronym()} has changed value to ${asset.GetValue()} $ from ${followed.GetValue()} $`));
+                return;
+            }
+        }
+    }
 }

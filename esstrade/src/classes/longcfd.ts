@@ -51,13 +51,17 @@ export class LongCFD extends CFD {
         this.SetAsset(asset);
 
         if (this.GetTakeProfit() != null) {
-            if (this.IsTakeProfit())
+            if (this.IsTakeProfit()) {
                 this.CloseCFD();
+                console.log(`\nThe buy CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
+            }
         }
 
         if (this.GetStopLoss() != null) {
-            if (this.IsStopLoss())
+            if (this.IsStopLoss()) {
                 this.CloseCFD();
+                console.log(`\nThe buy CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
+            }
         }
     }
 
@@ -71,6 +75,7 @@ export class LongCFD extends CFD {
         this.GetUser().UpdateCapital();
         await this.GetUser().save();
         this.SetClosed(true);
+        console.log(`\nThe Buy CFD for ${this.GetAsset().GetAcronym()} has been closed.`);
     }
 
 }

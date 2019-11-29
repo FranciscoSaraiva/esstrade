@@ -50,7 +50,7 @@ export async function CheckAssets(trader: Trader) {
             var acronym = asset.GetAcronym();
             var name = asset.GetName();
             var type = asset.GetAssetType().GetName();
-            var value = asset.GetValue() + '$';
+            var value = asset.GetValue() + ' $';
             var buyPrice = asset.GetBuyPrice() + ' $';
             var sellPrice = asset.GetSellPrice() + ' $';
             var change = (asset.GetChange() >= 0) ? chalk.green(asset.GetChange()) : chalk.red(asset.GetChange());
