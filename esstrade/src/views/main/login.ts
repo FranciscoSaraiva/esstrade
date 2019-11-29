@@ -25,7 +25,7 @@ export function Login(assets: Asset[]): void {
             if (user != undefined && user.CheckLoginCredentials(email, password)) {
                 user.SetSubject(user.GetFollows())
                 var trader: Trader = await CreateTrader(user, assets);
-                //clear();
+                clear();
                 LoggedMenu(false, trader);
             } else {
                 clear();
