@@ -103,12 +103,28 @@ export abstract class CFD extends BaseEntity implements Observer {
         return this.Amount;
     }
 
+    public GetTakeProfit(): number {
+        return this.TakeProfit;
+    }
+
+    public GetStopLoss(): number {
+        return this.StopLoss;
+    }
+
+    public GetTrueValueAsset(): number {
+        return this.GetAsset().GetValue() * this.GetAmount();
+    }
+
+    public SetAsset(asset: Asset) {
+        this.Asset = asset;
+    }
+
     public SetClosed(value: boolean): void {
         this.Closed = value;
     }
 
     public update(asset: Asset) {
-        console.log('I have been notified')
+        console.log('notified on cfd')
         this.Asset = asset;
     }
 

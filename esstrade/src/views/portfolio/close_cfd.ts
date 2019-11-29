@@ -39,13 +39,22 @@ export function CloseCFD(trader: Trader): void {
                     clear();
                     await longcfd.CloseCFD();
                     await longcfd.save();
-                    console.log('The CFD has been closed.\n');
 
+                    var index = trader.getLongCFDs().indexOf(longcfd);
+                    trader.getLongCFDs().splice(index, 1);
+                    trader.getClosedLongCFDs().push(longcfd);
+
+                    console.log('The CFD has been closed.\n');
                 }
                 if (shortcfd != undefined) {
                     clear();
                     await shortcfd.CloseCFD();
                     await shortcfd.save();
+
+                    var index = trader.getShortCFDs().indexOf(shortcfd);
+                    trader.getShortCFDs().splice(index, 1);
+                    trader.getClosedShortCFDs().push(shortcfd);
+
                     console.log('The CFD has been closed.\n');
                 }
 

@@ -2,7 +2,7 @@ import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
 import { ChildEntity, Column, BaseEntity } from "typeorm";
-import { Subject } from './interfaces/subject';
+import { Observer } from './interfaces/observer';
 
 @ChildEntity()
 export class LongCFD extends CFD {
@@ -35,14 +35,38 @@ export class LongCFD extends CFD {
         return this.BuyPrice;
     }
 
+    public GetTrueValueCFD(): number {
+        return this.BuyPrice * this.GetAmount();
+    }
+
+    public IsTakeProfit(): boolean {
+        return (this.GetTrueValueAsset() >= this.GetTakeProfit()) ? true : false;
+    }
+
+    public IsStopLoss(): boolean {
+        return (this.GetTrueValueAsset() <= this.GetStopLoss()) ? true : false;
+    }
+
+    public update(asset: Asset) {
+        this.SetAsset(asset);
+
+        if (this.GetTakeProfit() != null) {
+            if (this.IsTakeProfit())
+                this.CloseCFD();
+        }
+
+        if (this.GetStopLoss() != null) {
+            if (this.IsStopLoss())
+                this.CloseCFD();
+        }
+    }
+
     public async CloseCFD() {
-        // ( amount x price of the asset at the moment of closing ) - ( amount x price of the asset at the time )
-        var profit = (this.GetAsset().GetSellPrice() * this.GetAmount()) - (this.BuyPrice * this.GetAmount());
-        // ( profit gained ) + ( amount x price of the asset when cfd started)
-        var newBalance = profit + (this.BuyPrice * this.GetAmount());
+        var profit = this.GetTrueValueCFD() - this.GetTrueValueAsset();
+        var newBalance = profit + this.GetTrueValueAsset();
 
         this.GetUser().AddBalance(newBalance);
-        this.GetUser().RemoveTotalAllocated((this.BuyPrice * this.GetAmount()))
+        this.GetUser().RemoveTotalAllocated(this.GetTrueValueCFD())
         this.GetUser().RemoveProfit(profit);
         this.GetUser().UpdateCapital();
         await this.GetUser().save();

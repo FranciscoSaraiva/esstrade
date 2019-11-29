@@ -23,7 +23,7 @@ export function Login(assets: Asset[]): void {
 
             if (user != undefined && user.CheckLoginCredentials(email, password)) {
                 var trader: Trader = await CreateTrader(user, assets);
-
+                clear();
                 LoggedMenu(false, trader);
             } else {
                 clear();
@@ -37,14 +37,12 @@ export function Login(assets: Asset[]): void {
 async function CreateTrader(user: User, assets: Asset[]): Promise<Trader> {
     var trader: Trader;
 
-    console.log(user);
-    var longCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: false, UserId: user.GetId() } });
-    console.log(longCFDs);
+    var longCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: false, User: user } });
 
-    var shortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: false, UserId: user.GetId() } });
+    var shortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: false, User: user } });
 
-    var closedLongCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: true, UserId: user.GetId() } });;
-    var closedShortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: true, UserId: user.GetId() } });;
+    var closedLongCFDs: LongCFD[] = await getRepository(LongCFD).find({ where: { Closed: true, User: user } });;
+    var closedShortCFDs: ShortCFD[] = await getRepository(ShortCFD).find({ where: { Closed: true, User: user } });;
 
     trader = new Trader(user, assets, longCFDs, shortCFDs, closedLongCFDs, closedShortCFDs);
 
