@@ -1,7 +1,7 @@
-import { User } from '../user';
-import { Asset } from '../asset';
-import { LongCFD } from '../longcfd';
-import { ShortCFD } from '../shortcfd';
+import { User } from '../entities/user';
+import { Asset } from '../entities/asset';
+import { LongCFD } from '../entities/longcfd';
+import { ShortCFD } from '../entities/shortcfd';
 
 export class Trader {
 

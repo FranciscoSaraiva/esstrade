@@ -3,12 +3,12 @@ import chalk from 'chalk';
 import clear from 'clear'
 import boxen, { BorderStyle } from 'boxen';
 import { CheckAssets } from './check_assets';
-import { User } from '../../classes/user';
+import { User } from '../../entities/user';
 import { MainMenu } from '../main/main_menu';
 import { EditProfile } from './edit_profile';
 import { AddBalance } from './add_balance';
 import { GetPortfolios } from './get_portfolios';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 import { FollowAsset } from './follow_asset';
 import { CreateTable } from '../../utilities/table';
 

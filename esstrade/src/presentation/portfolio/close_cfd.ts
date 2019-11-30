@@ -1,9 +1,9 @@
 import clear from 'clear';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-import { LongCFD } from '../../classes/longcfd';
-import { ShortCFD } from '../../classes/shortcfd';
-import { Trader } from '../../classes/platform/trader';
+import { LongCFD } from '../../entities/longcfd';
+import { ShortCFD } from '../../entities/shortcfd';
+import { Trader } from '../../platform/trader';
 import { CFDMenu } from './cfd_menu';
 import { GetPortfolios } from '../user/get_portfolios';
 

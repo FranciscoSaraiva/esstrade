@@ -2,9 +2,9 @@ import clear = require('clear');
 import chalk = require('chalk');
 import inquirer = require('inquirer');
 //local
-import { User } from '../../classes/user';
+import { User } from '../../entities/user';
 import { LoggedMenu } from './logged_menu';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 
 
 export function AddBalance(trader: Trader) {

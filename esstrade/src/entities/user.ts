@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity, JoinColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { CFD } from "./cfd";
 import { Asset } from './asset';
-import { Observer } from './interfaces/observer';
-import { Subject } from './interfaces/subject';
+import { Observer } from '../interfaces/observer';
+import { Subject } from '../interfaces/subject';
 import chalk from 'chalk';
 
 @Entity("User")

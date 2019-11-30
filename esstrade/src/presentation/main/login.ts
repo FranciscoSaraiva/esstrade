@@ -2,13 +2,13 @@ import inquirer from 'inquirer';
 import chalk from 'chalk';
 import clear from 'clear';
 import { getRepository } from 'typeorm';
-import { User } from '../../classes/user';
+import { User } from '../../entities/user';
 import { MainMenu } from './main_menu';
 import { LoggedMenu } from '../user/logged_menu';
-import { Asset } from '../../classes/asset';
-import { Trader } from '../../classes/platform/trader';
-import { LongCFD } from '../../classes/longcfd';
-import { ShortCFD } from '../../classes/shortcfd';
+import { Asset } from '../../entities/asset';
+import { Trader } from '../../platform/trader';
+import { LongCFD } from '../../entities/longcfd';
+import { ShortCFD } from '../../entities/shortcfd';
 
 export function Login(assets: Asset[]): void {
     inquirer.prompt([

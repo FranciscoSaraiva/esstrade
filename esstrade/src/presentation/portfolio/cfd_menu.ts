@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { LoggedMenu } from '../user/logged_menu';
 import { CloseCFD } from './close_cfd';
 import { OpenCFD } from './open_cfd';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 
 
 

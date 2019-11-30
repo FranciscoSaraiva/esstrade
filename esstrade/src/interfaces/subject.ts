@@ -1,5 +1,5 @@
 import { Observer } from './observer';
-import { Asset } from '../asset';
+import { Asset } from '../entities/asset';
 
 export interface Subject {
     registerObserver(observer: Observer);

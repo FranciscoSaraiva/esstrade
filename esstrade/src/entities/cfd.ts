@@ -1,8 +1,8 @@
 import { User } from "./user";
 import { Asset } from "./asset";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, TableInheritance, RelationId, JoinColumn, BaseEntity } from "typeorm";
-import { Observer } from './interfaces/observer';
-import { Subject } from './interfaces/subject';
+import { Observer } from '../interfaces/observer';
+import { Subject } from '../interfaces/subject';
 
 @Entity("CFD")
 @TableInheritance({ column: { name: "cfd_type", type: "varchar" } })

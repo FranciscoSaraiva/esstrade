@@ -3,11 +3,11 @@ import clear from 'clear';
 import chalk from 'chalk';
 import { getRepository } from 'typeorm';
 import { CFDMenu } from './cfd_menu';
-import { LongCFD } from '../../classes/longcfd';
-import { ShortCFD } from '../../classes/shortcfd';
-import { Asset } from '../../classes/asset';
-import { Trader } from '../../classes/platform/trader';
-import { User } from '../../classes/user';
+import { LongCFD } from '../../entities/longcfd';
+import { ShortCFD } from '../../entities/shortcfd';
+import { Asset } from '../../entities/asset';
+import { Trader } from '../../platform/trader';
+import { User } from '../../entities/user';
 import { GetPortfolios } from '../user/get_portfolios';
 
 export function OpenCFD(trader: Trader) {

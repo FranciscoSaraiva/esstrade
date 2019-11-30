@@ -3,9 +3,9 @@ import 'reflect-metadata';
 import { createConnection, getRepository } from 'typeorm';
 import clear from 'clear';
 //local
-import { MainMenu } from './views/main/main_menu';
+import { MainMenu } from './presentation/main/main_menu';
 import { SeedDatabase } from './database/seed';
-import { Asset } from './classes/asset';
+import { Asset } from './entities/asset';
 
 
 createConnection().then(async connection => {

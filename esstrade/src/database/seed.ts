@@ -1,8 +1,8 @@
 import si = require('stock-info');
-import { AssetType } from '../classes/asset_type';
-import { Asset } from '../classes/asset';
-import { User } from '../classes/user';
-import { ApiResponse } from '../classes/api/api_response';
+import { AssetType } from '../entities/asset_type';
+import { Asset } from '../entities/asset';
+import { User } from '../entities/user';
+import { ApiResponse } from '../api/api_response';
 
 export async function SeedDatabase(): Promise<Asset[]> {
 

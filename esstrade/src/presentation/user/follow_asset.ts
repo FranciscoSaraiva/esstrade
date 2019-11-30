@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 import { getRepository } from 'typeorm';
-import { Asset } from '../../classes/asset';
+import { Asset } from '../../entities/asset';
 import chalk from 'chalk';
 import clear from 'clear';
 import { LoggedMenu } from './logged_menu';

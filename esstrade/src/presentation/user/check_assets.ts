@@ -2,13 +2,13 @@ import { getRepository } from 'typeorm';
 import inquirer from "inquirer";
 import clear from 'clear';
 import chalk from 'chalk';
-import { Asset } from '../../classes/asset';
-import { AssetType } from '../../classes/asset_type';
+import { Asset } from '../../entities/asset';
+import { AssetType } from '../../entities/asset_type';
 import { CreateTable } from '../../utilities/table';
 import { MainMenu } from '../main/main_menu';
 import { LoggedMenu } from './logged_menu';
-import { User } from '../../classes/user';
-import { Trader } from '../../classes/platform/trader';
+import { User } from '../../entities/user';
+import { Trader } from '../../platform/trader';
 
 export async function CheckAssets(trader: Trader) {
 

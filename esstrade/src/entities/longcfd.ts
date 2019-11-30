@@ -1,14 +1,14 @@
 import { CFD } from "./cfd";
 import { Asset } from "./asset";
 import { User } from "./User";
-import { ChildEntity, Column } from "typeorm";
-import { Observer } from './interfaces/observer';
+import { ChildEntity, Column, BaseEntity } from "typeorm";
+import { Observer } from '../interfaces/observer';
 
 @ChildEntity()
-export class ShortCFD extends CFD {
+export class LongCFD extends CFD {
 
-    @Column({ name: "sell_price", type: "double" })
-    private SellPrice: number;
+    @Column({ name: "buy_price", type: "double" })
+    private BuyPrice: number;
 
     /**
      * 
@@ -20,23 +20,23 @@ export class ShortCFD extends CFD {
      * @param StartDate Date the CFD was created
      * @param EndDate Date the CFD was ended
      * @param Closed Flag that indicates the CFD is closed
-     * @param SellPrice Price that was set per unit of the asset at the start of the CFD
+     * @param BuyPrice Price that was set per unit of the asset at the start of the CFD
      */
-    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, SellPrice: number) {
+    constructor(Asset: Asset, User: User, Amount: number, TakeProfit: number, StopLoss: number, StartDate: Date, EndDate: Date, Closed: boolean, BuyPrice: number) {
         super(Asset, User, Amount, TakeProfit, StopLoss, StartDate, EndDate, Closed);
-        this.SellPrice = SellPrice;
+        this.BuyPrice = BuyPrice;
     }
 
     /**
      * Methods
      */
 
-    public GetSellPrice(): number {
-        return this.SellPrice;
+    public GetBuyPrice(): number {
+        return this.BuyPrice;
     }
 
     public GetTrueValueCFD(): number {
-        return this.SellPrice * this.GetAmount();
+        return this.BuyPrice * this.GetAmount();
     }
 
     public IsTakeProfit(): boolean {
@@ -49,17 +49,18 @@ export class ShortCFD extends CFD {
 
     public update(asset: Asset) {
         this.SetAsset(asset);
+
         if (this.GetTakeProfit() != null) {
             if (this.IsTakeProfit()) {
                 this.CloseCFD();
-                console.log(`\nThe sell CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
+                console.log(`\nThe buy CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
             }
         }
 
         if (this.GetStopLoss() != null) {
             if (this.IsStopLoss()) {
                 this.CloseCFD();
-                console.log(`\nThe sell CFD for ${this.GetAsset().GetAcronym()} has been closed because of the stop loss clause.`)
+                console.log(`\nThe buy CFD for ${this.GetAsset().GetAcronym()} has been closed because of the take profit clause.`)
             }
         }
     }
@@ -74,6 +75,7 @@ export class ShortCFD extends CFD {
         this.GetUser().UpdateCapital();
         await this.GetUser().save();
         this.SetClosed(true);
-        console.log(`\nThe Sell CFD for ${this.GetAsset().GetAcronym()} has been closed.`);
+        console.log(`\nThe Buy CFD for ${this.GetAsset().GetAcronym()} has been closed.`);
     }
+
 }

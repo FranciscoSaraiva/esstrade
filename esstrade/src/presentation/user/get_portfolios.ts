@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 import clear from 'clear';
 import Table from 'cli-table';
-import { LongCFD } from '../../classes/longcfd';
-import { ShortCFD } from '../../classes/shortcfd';
+import { LongCFD } from '../../entities/longcfd';
+import { ShortCFD } from '../../entities/shortcfd';
 import { CFDMenu } from '../portfolio/cfd_menu';
 import { CreateTable } from '../../utilities/table';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 
 
 export async function GetPortfolios(clear_screen: boolean, trader: Trader) {

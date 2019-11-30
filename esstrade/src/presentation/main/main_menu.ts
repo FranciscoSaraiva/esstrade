@@ -4,7 +4,7 @@ import figlet from 'figlet';
 import inquirer from "inquirer";
 import { Register } from './register';
 import { Login } from './login';
-import { Asset } from '../../classes/asset';
+import { Asset } from '../../entities/asset';
 
 
 export function MainMenu(clear_screen: boolean, assets: Asset[]): void {

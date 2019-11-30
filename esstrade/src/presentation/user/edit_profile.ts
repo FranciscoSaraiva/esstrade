@@ -1,10 +1,10 @@
 import chalk = require('chalk');
 import clear = require('clear');
 //local
-import { User } from '../../classes/user';
+import { User } from '../../entities/user';
 import inquirer = require('inquirer');
 import { LoggedMenu } from './logged_menu';
-import { Trader } from '../../classes/platform/trader';
+import { Trader } from '../../platform/trader';
 
 
 export function EditProfile(trader: Trader) {

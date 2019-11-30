@@ -1,4 +1,4 @@
-import { Asset } from '../asset';
+import { Asset } from '../entities/asset';
 
 export interface Observer {
     update(asset: Asset);

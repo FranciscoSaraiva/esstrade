@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import boxen, { BorderStyle } from 'boxen';
 import clear from 'clear';
 import { getRepository } from 'typeorm';
-import { User } from '../../classes/user';
+import { User } from '../../entities/user';
 import { MainMenu } from './main_menu';
-import { Asset } from '../../classes/asset';
+import { Asset } from '../../entities/asset';
 
 
 export function Register(assets: Asset[]): void {
