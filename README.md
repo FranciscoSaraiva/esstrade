@@ -9,9 +9,6 @@ Implementações necessárias à 1º fase:
 - Implementação de design patterns
   - **Observer** obrigatório
 
-Implementações necessárias à 2º fase:
-- Refactoring
-
 ## Instalação
 - Criar schema com nome da base de dados 
 ```
